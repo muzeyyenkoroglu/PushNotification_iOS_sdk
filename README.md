@@ -83,7 +83,7 @@ Bunu yaptığınızda uygulama ilk açıldığında sizden Notification Center�
 ```
 
 #Kayıt
-**TCellNotificationManager** nesnesine gerekli ayarlar sağlandıktan sonra Push bildirimleri alabilmek için yapılması gereken ilk işlem kayıt olmaktır. Push Server’ a kayıt olmak için **registerDeviceWithDelegate** metodu çağırılmalıdır. NotificationManagerDelegate protokolü üzerinden alabilirsiniz. Örnek kullanım aşağıdaki gibidir. 
+**TCellNotificationManager** nesnesine gerekli ayarlar sağlandıktan sonra Push bildirimleri alabilmek için yapılması gereken ilk işlem kayıt olmaktır. Push Server’ a kayıt olmak için **registerDeviceWithDelegate** metodu çağırılmalıdır. Sunucudan gelen cevapları NotificationManagerDelegate protokolü üzerinden alabilirsiniz. Örnek kullanım aşağıdaki gibidir. 
 
 ```objective-c
 [[TCellNotificationManager sharedInstance] registerDeviceWithDelegate:self];
