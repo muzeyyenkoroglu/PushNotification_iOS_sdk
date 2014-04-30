@@ -86,7 +86,7 @@ Bunu yaptığınızda uygulama ilk açıldığında sizden Notification Center�
 **TCellNotificationManager** nesnesine gerekli ayarlar sağlandıktan sonra Push bildirimleri alabilmek için yapılması gereken ilk işlem kayıt olmaktır. Push Server’ a kayıt olmak için **registerDeviceWithDelegate** metodu çağırılmalıdır. Sunucudan gelen cevapları NotificationManagerDelegate protokolü üzerinden alabilirsiniz. Örnek kullanım aşağıdaki gibidir. 
 
 ```objective-c
-[[TCellNotificationManager sharedInstance] registerDeviceWithDelegate:self];
+[[TCellNotificationManager sharedInstance] registerDeviceWithDelegate:self customID:@"myCustomID" genericParam:@"myGenericParam"];
 ```
 İşlem sonucunda **TCellRegistrationResult** tipinde bir nesne döner. Bu nesne üzerindeki **isSuccessfull** özelliği ile işlem sonucunu kontrol edebilirsiniz. İşlem sonucunun başarısız olması durumunda ise **TCellRegistrationResult.Error** ve **TCellRegistrationResult.StatusCode** alanları ile hata sebebi ile ilgili detaylı bilgiye ulaşabilirsiniz. 
 ```objective-c
