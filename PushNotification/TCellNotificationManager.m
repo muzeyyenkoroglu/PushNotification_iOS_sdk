@@ -134,10 +134,10 @@
     [operation start];
 }
 
-- (void)registerDeviceWithDelegate:(id<NotificationManagerDelegate>)delegate customID:(NSString *)customID
+- (void)registerDeviceWithDelegate:(id<NotificationManagerDelegate>)delegate customID:(NSString *)customID genericParam:(NSString *)genericParam
 {
     self.delegate = delegate;
-    NSString* path = [NSString stringWithFormat:@"%@%@.%@.%@",REGISTRATION_PATH,self.notificationSettings.appId,self.deviceToken,[self encryptedStringAppIDTokenSecurityKey]];
+    NSString* path = [NSString stringWithFormat:@"%@%@/%@",REGISTRATION_PATH,self.notificationSettings.appId,self.deviceToken];
     
     
     NSString* deviceModelName = [[Utilities deviceModelName] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
@@ -148,6 +148,9 @@
     
     if (customID && [customID length] >0)
         path = [path stringByAppendingString:[NSString stringWithFormat:@"&%@=%@",PARAMETER_CUSTOM_ID,customID]];
+    
+    if (genericParam && [genericParam length] >0)
+        path = [path stringByAppendingString:[NSString stringWithFormat:@"&%@=%@",PARAMETER_GENERIC_PARAM,genericParam]];
     
     [self makeRequestWithBaseURL:PUSH_SERVER_URL path:path delegate:self.delegate selector:@selector(registrationResultInternal:)];
 }
@@ -161,7 +164,7 @@
 - (void)unRegisterDeviceWithDelegate:(id<NotificationManagerDelegate>)delegate
 {
     self.delegate = delegate;
-    NSString* path = [NSString stringWithFormat:@"%@%@.%@.%@",UNREGISTRATION_PATH,self.notificationSettings.appId,self.deviceToken,[self encryptedStringAppIDTokenSecurityKey]];
+    NSString* path = [NSString stringWithFormat:@"%@%@/%@",UNREGISTRATION_PATH,self.notificationSettings.appId,self.deviceToken];
     [self makeRequestWithBaseURL:PUSH_SERVER_URL path:path delegate:self.delegate selector:@selector(unRegistrationResultInternal:)];
 }
 

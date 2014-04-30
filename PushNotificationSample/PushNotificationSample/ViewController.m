@@ -56,7 +56,7 @@
 - (IBAction)registerDeviceButtonPressed:(UIButton *)sender {
     if ([self.man hasDeviceToken]){
         self.spinner.hidden = NO;
-        [[TCellNotificationManager sharedInstance] registerDeviceWithDelegate:self customID:@"test"];
+        [[TCellNotificationManager sharedInstance] registerDeviceWithDelegate:self customID:@"customIDTest" genericParam:@"genericParamTest"];
     }
 }
 
@@ -109,7 +109,6 @@
         [alert show];
     }
 }
-
 
 #pragma mark - Get subscribed category list method and delegate call back
 - (IBAction)getSubscribedCategoryPressed:(UIButton *)sender {

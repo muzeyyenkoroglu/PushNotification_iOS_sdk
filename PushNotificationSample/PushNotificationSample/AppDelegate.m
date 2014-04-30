@@ -26,19 +26,15 @@
     NSLog(@"test: %@", SDK_VERSION);
     
     TCellNotificationSettings* settings = [[TCellNotificationSettings alloc]
-                                           initWithAppId:@"AppId" 
-                                           secretKey:@"SecretKey%"
+                                           initWithAppId:@"APP_ID"
+                                           secretKey:@"SECURITY_KEY"
                                            notificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound)];
     
 	TCellNotificationManager* man =[TCellNotificationManager sharedInstance];
     man.notificationSettings = settings;
     [man registerApplicationForRemoteNotificationTypes];
-    
-    //[application unregisterForRemoteNotifications];
-    
 #if DEBUG
-//#if DEBUG
-    [[TCellNotificationManager sharedInstance] setNotificationDeviceTokenWithString:@"53b829fb1c17b7f7ad1fd168e178356bb6865717b4bd1faf655815ef302a573e"];
+    [[TCellNotificationManager sharedInstance] setNotificationDeviceTokenWithString:@"test_token"];
 #endif
     return YES;
 }
@@ -76,7 +72,7 @@
     NSString *token = [[newDeviceToken description] stringByTrimmingCharactersInSet:      [NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
     
-    NSLog(@"toke: %@",token);
+    NSLog(@"My Device token: %@",token);
     
     [[TCellNotificationManager sharedInstance] setNotificationDeviceTokenWithData:newDeviceToken];
 }

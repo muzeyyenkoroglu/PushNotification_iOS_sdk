@@ -142,9 +142,10 @@
  * Registers device to push notification center.
  *
  * \param delegate Class that implements NotificationManagerDelegate protocol.
- * \param customID holds any string to send to push server. 
+ * \param customID holds any string to send to push server for an alternative identification of the client
+ * \param genericParam holds any string to send to push server for any other parameter such as resolution etc.
  */
-- (void)registerDeviceWithDelegate:(id<NotificationManagerDelegate>)delegate customID:(NSString *)customID;
+- (void)registerDeviceWithDelegate:(id<NotificationManagerDelegate>)delegate customID:(NSString *)customID  genericParam:(NSString *)genericParam;
 
 /*!
  * Unregisters device from push notification center.
