@@ -56,7 +56,7 @@
 - (IBAction)registerDeviceButtonPressed:(UIButton *)sender {
     if ([self.man hasDeviceToken]){
         self.spinner.hidden = NO;
-        [[TCellNotificationManager sharedInstance] registerDeviceWithDelegate:self customID:@"customIDTest" genericParam:@"genericParamTest"];
+        [[TCellNotificationManager sharedInstance] registerDeviceWithDelegate:self customID:@"" genericParam:@"genericParamTest"];
     }
 }
 
