@@ -26,7 +26,6 @@
 
 @interface TCellNotificationManager ()
 
-@property (assign, nonatomic) id<NotificationManagerDelegate> delegate;
 @property (strong, nonatomic) NSString* deviceToken;
 
 - (void)registrationResultInternal:(TCellApiResponse*)result;
@@ -37,11 +36,12 @@
 - (void)subscribeToCategoryResultInternal:(TCellApiResponse*)result;
 - (void)unSubscribeFromCategoryResultInternal:(TCellApiResponse*)result;
 
+@property (nonatomic, copy) void (^completionHandler)(id obj);
+
 @end
 
 @implementation TCellNotificationManager
 @synthesize notificationSettings = _notificationSettings;
-@synthesize delegate = _delegate;
 @synthesize deviceToken = _deviceToken;
 
 + (TCellNotificationManager *)sharedInstance
@@ -109,7 +109,7 @@
 }
 
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-- (void)makeRequestWithBaseURL:(NSString*)baseURL path:(NSString*)path delegate:(id<NotificationManagerDelegate>)delegate selector:(SEL)selector
+- (void)makeRequestWithBaseURL:(NSString*)baseURL path:(NSString*)path selector:(SEL)selector completion:(void(^)(id obj))completionBlock
 {
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:baseURL]];
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
@@ -125,7 +125,6 @@
         DLog(@"Response: %@", [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
         TCellApiResponse *result = [[TCellApiResponse alloc] initWithResponseObject:responseObject error:nil];
         [self performSelector:selector withObject:result withObject:nil];
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         DLog(@"Error: %@", error);
         TCellApiResponse *result = [[TCellApiResponse alloc] initWithResponseObject:nil error:error];
@@ -134,9 +133,10 @@
     [operation start];
 }
 
-- (void)registerDeviceWithDelegate:(id<NotificationManagerDelegate>)delegate customID:(NSString *)customID genericParam:(NSString *)genericParam
+- (void)registerDeviceWithCustomID:(NSString *)customID genericParam:(NSString *)genericParam completionHandler:(void(^)(id obj))completionBlock
 {
-    self.delegate = delegate;
+    self.completionHandler = completionBlock;
+    
     NSString* path = [NSString stringWithFormat:@"%@%@/%@",REGISTRATION_PATH,self.notificationSettings.appId,self.deviceToken];
     
     
@@ -152,91 +152,92 @@
     if (genericParam && [genericParam length] >0)
         path = [path stringByAppendingString:[NSString stringWithFormat:@"&%@=%@",PARAMETER_GENERIC_PARAM,genericParam]];
     
-    [self makeRequestWithBaseURL:PUSH_SERVER_URL path:path delegate:self.delegate selector:@selector(registrationResultInternal:)];
+    [self makeRequestWithBaseURL:PUSH_SERVER_URL path:path selector:@selector(registrationResultInternal:) completion:completionBlock];
 }
 
 - (void)registrationResultInternal:(TCellApiResponse*)result
 {
     TCellRegistrationResult* _result= [[TCellRegistrationResult alloc] initRegistrationResultWithResponse:result.responseObject error:result.error];
-    [self.delegate registrationResult:_result];
+    self.completionHandler(_result);
+    //[self.delegate registrationResult:_result];
 }
 
-- (void)unRegisterDeviceWithDelegate:(id<NotificationManagerDelegate>)delegate
+- (void)unRegisterDeviceWithCompletionHandler:(void(^)(id obj))completionBlock
 {
-    self.delegate = delegate;
     NSString* path = [NSString stringWithFormat:@"%@%@/%@",UNREGISTRATION_PATH,self.notificationSettings.appId,self.deviceToken];
-    [self makeRequestWithBaseURL:PUSH_SERVER_URL path:path delegate:self.delegate selector:@selector(unRegistrationResultInternal:)];
+    [self makeRequestWithBaseURL:PUSH_SERVER_URL path:path selector:@selector(unRegistrationResultInternal:) completion:completionBlock];
 }
 
 - (void)unRegistrationResultInternal:(TCellApiResponse*)result
 {
     TCellRegistrationResult* _result= [[TCellRegistrationResult alloc] initRegistrationResultWithResponse:result.responseObject error:result.error];
-    [self.delegate unRegistrationResult:_result];
+    self.completionHandler(_result);
+    //[self.delegate unRegistrationResult:_result];
 }
 
-- (void)getCategoryListWithDelegate:(id<NotificationManagerDelegate>)delegate
+- (void)getCategoryListWithCompletionHandler:(void(^)(id obj))completionBlock
 {
-    self.delegate = delegate;
     NSString* path = [NSString stringWithFormat:@"%@%@.%@",CATEGORY_LIST_PATH,self.notificationSettings.appId,[self encryptedStringAppIDSecurityKey]];
-    [self makeRequestWithBaseURL:PUSH_SERVER_URL path:path delegate:self.delegate selector:@selector(categoryListQueryResultInternal:)];
+    [self makeRequestWithBaseURL:PUSH_SERVER_URL path:path selector:@selector(categoryListQueryResultInternal:) completion:completionBlock];
 }
 
 - (void)categoryListQueryResultInternal:(TCellApiResponse*)result
 {
     TCellCategoryListQueryResult* _result= [[TCellCategoryListQueryResult alloc] initCategoryListQueryResultWithResponse:result.responseObject error:result.error];
-    [self.delegate categoryListQueryResult:_result];
+    self.completionHandler(_result);
+    //[self.delegate categoryListQueryResult:_result];
 }
 
-- (void)getCategorySubscriptionsWithDelegate:(id<NotificationManagerDelegate>)delegate
+- (void)getCategorySubscriptionsWithCompletionHandler:(void(^)(id obj))completionBlock
 {
-    self.delegate = delegate;
     NSString* path = [NSString stringWithFormat:@"%@%@.%@?token=%@",ALLOWED_CATEGORIES_PATH,self.notificationSettings.appId,[self encryptedStringAppIDSecurityKey],self.deviceToken];
-    [self makeRequestWithBaseURL:PUSH_SERVER_URL path:path delegate:self.delegate selector:@selector(categoriesSubscribedToResultInternal:)];
+    [self makeRequestWithBaseURL:PUSH_SERVER_URL path:path selector:@selector(categoriesSubscribedToResultInternal:) completion:completionBlock];
 }
 
 - (void)categoriesSubscribedToResultInternal:(TCellApiResponse*)result
 {
     TCellCategoryListQueryResult* _result= [[TCellCategoryListQueryResult alloc] initCategoryListQueryResultWithResponse:result.responseObject error:result.error];
-    [self.delegate categoriesSubscribedToResult:_result];
+    self.completionHandler(_result);
+    //[self.delegate categoriesSubscribedToResult:_result];
 }
 
-- (void)getNotificationHistoryWithDelegate:(id<NotificationManagerDelegate>)delegate offSet:(int)offSet listSize:(int)listSize
+- (void)getNotificationHistoryWithOffSet:(int)offSet listSize:(int)listSize completionHandler:(void(^)(id obj))completionBlock
 {
-    self.delegate = delegate;
     NSString* path = [NSString stringWithFormat:@"%@%@.%@/%i.%i",MESSAGE_HISTORY_PATH,self.notificationSettings.appId,[self encryptedStringAppIDSecurityKey],offSet,listSize];
-    [self makeRequestWithBaseURL:PUSH_SERVER_URL path:path delegate:self.delegate selector:@selector(notificationHistoryResultInternal:)];
+    [self makeRequestWithBaseURL:PUSH_SERVER_URL path:path selector:@selector(notificationHistoryResultInternal:) completion:completionBlock];
 }
 
 - (void)notificationHistoryResultInternal:(TCellApiResponse*)result
 {
     TCellNotificationHistoryResult* _result= [[TCellNotificationHistoryResult alloc] initNotificationHistoryResultWithResponse:result.responseObject error:result.error];
-    [self.delegate notificationHistoryResult:_result];
+    self.completionHandler(_result);
+    //[self.delegate notificationHistoryResult:_result];
 }
 
-- (void)subscribeToCategoryWithDelegate:(id<NotificationManagerDelegate>)delegate categoryName:(NSString*)categoryName
+- (void)subscribeToCategoryWithCategoryName:(NSString*)categoryName completionHandler:(void(^)(id obj))completionBlock
 {
-    self.delegate = delegate;
     NSString* path = [NSString stringWithFormat:@"%@%@.%@?token=%@&categoryName=%@",SET_CATEGORY_PATH,self.notificationSettings.appId,[self encryptedStringAppIDSecurityKey],self.deviceToken,categoryName];
-    [self makeRequestWithBaseURL:PUSH_SERVER_URL path:path delegate:self.delegate selector:@selector(subscribeToCategoryResultInternal:)];
+    [self makeRequestWithBaseURL:PUSH_SERVER_URL path:path selector:@selector(subscribeToCategoryResultInternal:) completion:completionBlock];
 }
 
 - (void)subscribeToCategoryResultInternal:(TCellApiResponse*)result
 {
     TCellCategorySubscriptionResult* _result= [[TCellCategorySubscriptionResult alloc] initCategorySubscriptionsResultWithResponse:result.responseObject error:result.error];
-    [self.delegate subscribeToCategoryResult:_result];
+    self.completionHandler(_result);
+    //[self.delegate subscribeToCategoryResult:_result];
 }
 
-- (void)unSubscribeFromCategoryWithDelegate:(id<NotificationManagerDelegate>)delegate categoryName:(NSString*)categoryName
+- (void)unSubscribeFromCategoryWithCategoryName:(NSString*)categoryName completionHandler:(void(^)(id obj))completionBlock
 {
-    self.delegate = delegate;
     NSString* path = [NSString stringWithFormat:@"%@%@.%@?token=%@&categoryName=%@",UNSET_CATEGORY_PATH,self.notificationSettings.appId,[self encryptedStringAppIDSecurityKey],self.deviceToken,categoryName];
-    [self makeRequestWithBaseURL:PUSH_SERVER_URL path:path delegate:self.delegate selector:@selector(unSubscribeFromCategoryResultInternal:)];
+    [self makeRequestWithBaseURL:PUSH_SERVER_URL path:path selector:@selector(unSubscribeFromCategoryResultInternal:) completion:completionBlock];
 }
 
 - (void)unSubscribeFromCategoryResultInternal:(TCellApiResponse*)result
 {
     TCellCategorySubscriptionResult* _result= [[TCellCategorySubscriptionResult alloc] initCategorySubscriptionsResultWithResponse:result.responseObject error:result.error];
-    [self.delegate unSubscribeFromCategoryResult:_result];
+    self.completionHandler(_result);
+    //[self.delegate unSubscribeFromCategoryResult:_result];
 }
 
 @end

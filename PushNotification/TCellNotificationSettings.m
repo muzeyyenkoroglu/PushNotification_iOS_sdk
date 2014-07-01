@@ -22,7 +22,6 @@
 
 @end
 
-
 @implementation TCellNotificationSettings
 @synthesize appId = _appId;
 @synthesize secretKey = _secretKey;

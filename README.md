@@ -83,68 +83,126 @@ Bunu yaptığınızda uygulama ilk açıldığında sizden Notification Center�
 ```
 
 #Kayıt
-**TCellNotificationManager** nesnesine gerekli ayarlar sağlandıktan sonra Push bildirimleri alabilmek için yapılması gereken ilk işlem kayıt olmaktır. Push Server’ a kayıt olmak için **registerDeviceWithDelegate** metodu çağırılmalıdır. Sunucudan gelen cevapları NotificationManagerDelegate protokolü üzerinden alabilirsiniz. Örnek kullanım aşağıdaki gibidir. 
+**TCellNotificationManager** nesnesine gerekli ayarlar sağlandıktan sonra Push bildirimleri alabilmek için yapılması gereken ilk işlem kayıt olmaktır. Push Server’ a kayıt olmak için **registerDeviceWithCustomID:genericParam:completionHandler:** metodu çağırılmalıdır. Sunucudan gelen cevapları **completionHandler** block'u üzerinden alabilirsiniz. Örnek kullanım aşağıdaki gibidir. İşlem sonucunda **TCellRegistrationResult** tipinde bir nesne döner. Bu nesne üzerindeki **isSuccessfull** özelliği ile işlem sonucunu kontrol edebilirsiniz. İşlem sonucunun başarısız olması durumunda ise **TCellRegistrationResult.error** ve **TCellRegistrationResult.resultCode** alanları ile hata sebebi ile ilgili detaylı bilgiye ulaşabilirsiniz. 
+
+**Önemli:** **customID** parametreniz her cihaz/ugulama için tekil olmalıdır. Tekil olmayan parametreler sisteme eklenen cihaz sayınızda yanlışlara yol açacaktır. Böyle bir paremetre kullanımız yok ise boş geçebilirsiniz.
 
 ```objective-c
-[[TCellNotificationManager sharedInstance] registerDeviceWithDelegate:self customID:@"myCustomID" genericParam:@"myGenericParam"];
-```
-İşlem sonucunda **TCellRegistrationResult** tipinde bir nesne döner. Bu nesne üzerindeki **isSuccessfull** özelliği ile işlem sonucunu kontrol edebilirsiniz. İşlem sonucunun başarısız olması durumunda ise **TCellRegistrationResult.Error** ve **TCellRegistrationResult.StatusCode** alanları ile hata sebebi ile ilgili detaylı bilgiye ulaşabilirsiniz. 
-```objective-c
-- (void)registrationResult:(TCellRegistrationResult*)result;
-```
 
-Kayıt olmanın yanı sıra bir uygulama push bildirimleri almayı kesmek te gerekebilir. Push Server kaydığını kaldırmak için **unRegisterDeviceWithDelegate** metodu çağırılmalıdır. Dönen cevap nesnesi Register metodu ile aynıdır. 
+[[TCellNotificationManager sharedInstance] registerDeviceWithCustomID:@"" genericParam:@"genericParamTest" completionHandler:^(id obj) {
+    if ([obj isKindOfClass:[TCellRegistrationResult class]]){
+        TCellRegistrationResult *result = (TCellRegistrationResult*)obj;
+        if (result.isSuccessfull){
+            NSLog(@"Device is registered to push server.");
+        }else{
+			NSLog(@"Error: %@ Status Code: %@", [result.error localizedDescription],result.resultCode);
+        }
+    }            
+}];
+
+```
+Kayıt olmanın yanı sıra bir uygulama push bildirimleri almayı kesmek te gerekebilir. Push Server kaydığını kaldırmak için **unRegisterDeviceWithCompletionHandler:** metodu çağırılmalıdır. Dönen cevap nesnesi Register metodu ile aynıdır. 
 
 ```objective-c
-[[TCellNotificationManager sharedInstance] unRegisterDeviceWithDelegate:self];
-```
-Protokol metodu;
-```objective-c
-- (void)unRegistrationResult:(TCellRegistrationResult*)result;
-```
+[[TCellNotificationManager sharedInstance] unRegisterDeviceWithCompletionHandler:^(id obj) {
+    if ([obj isKindOfClass:[TCellRegistrationResult class]]){
+        TCellRegistrationResult *result = (TCellRegistrationResult*)obj;
+        if (result.isSuccessfull){
+           NSLog(@"Device is unregistered from push server.");
+        }else{
+            NSLog(@"Error: %@ Status Code: %@", [result.error localizedDescription],result.resultCode);
+        }
+    }
+            
+}];```
+
 result değişkeninden **isSuccessfull** değerini kontrol ederek başarılı ise uygulamayı Notification Center’ dan kaldırabilirsiniz. Bunun için aşağıdaki satırı eklemek yeterli olacaktır.
 ```objective-c
 [[TCellNotificationManager sharedInstance] unRegisterApplicationForRemoteNotificationTypes];
 ```
+
 #Bildirim Kategori Listesinin Alınması
-Push Server uygulama bazlı Push bildirim kategorileri oluşturma yeteneği sağlamaktadır. Bu yetenek sayesinde uygulamalar sadece belirli kategorilerdeki bildirimlere abone olabilmektedir. Örneğin bir haber uygulamasında kullanıcı sadece Spor kategorisindeki bildirimleri almak isteyebilir. Uygulamada mevcut kullanılabilir bildirim kategori listesini almak için **getCategoryListWithDelegate** metodu çağırılmalıdır. Örnek bir kod bloğu aşağıdaki gibidir. 
+Push Server uygulama bazlı Push bildirim kategorileri oluşturma yeteneği sağlamaktadır. Bu yetenek sayesinde uygulamalar sadece belirli kategorilerdeki bildirimlere abone olabilmektedir. Örneğin bir haber uygulamasında kullanıcı sadece Spor kategorisindeki bildirimleri almak isteyebilir. Uygulamada mevcut kullanılabilir bildirim kategori listesini almak için **getCategoryListWithCompletionHandler:** metodu çağırılmalıdır. Örnek bir kod bloğu aşağıdaki gibidir. 
 
 ```objective-c
-[[TCellNotificationManager sharedInstance] getCategoryListWithDelegate:self];
+[[TCellNotificationManager sharedInstance] getCategoryListWithCompletionHandler:^(id obj) {
+    if ([obj isKindOfClass:[TCellCategoryListQueryResult class]]){
+        TCellCategoryListQueryResult *result = (TCellCategoryListQueryResult*)obj;
+        if ([result.categories count] > 0){
+			NSLog(@"Categories: %@", [result.categories description]);
+        }else{
+        	NSLog(@"Error: %@ Status Code: %@", [result.error localizedDescription],result.resultCode);
+        }
+    }
+}];
 ```
-Bu metot cevap olarak **TCellCategoryListQueryResult** tipinde bir nesne döndürür. Nesne üzerindeki **categories** alanı üzerinden mevcut kategori listesine ulaşabilirsiniz. İsteğin başarılı olup olmadığını isSuccessfull özelliğinden, başarısızlık durumunda yine **TCellCategoryListQueryResult.Error** ve **TCellCategoryListQueryResult.StatusCode** özellikleri üzerinden detaylı bilgiye ulaşabilirsiniz. 
+Bu metot cevap olarak **TCellCategoryListQueryResult** tipinde bir nesne döndürür. Nesne üzerindeki **categories** alanı üzerinden mevcut kategori listesine ulaşabilirsiniz. İsteğin başarılı olup olmadığını isSuccessfull özelliğinden, başarısızlık durumunda yine **TCellCategoryListQueryResult.error** ve **TCellCategoryListQueryResult.resultCode** özellikleri üzerinden detaylı bilgiye ulaşabilirsiniz. 
 
 #Bildirim Kategorisine Abone Olma
-Uygulama için tanımlanmış bildirim kategori listesi alındıktan sonra kullanıcıya bu kategorilere abone olabileceği bir ara yüz sunabilirsiniz. Kullanıcıyı herhangi bir kategoriye abone yapmak için **subscribeToCategoryWithDelegate** metodunu çağırmalısınız. Metot parametre olarak kategori ismini almaktadır. Örnek bir kod bloğu aşağıdaki gibidir. 
+Uygulama için tanımlanmış bildirim kategori listesi alındıktan sonra kullanıcıya bu kategorilere abone olabileceği bir ara yüz sunabilirsiniz. Kullanıcıyı herhangi bir kategoriye abone yapmak için **subscribeToCategoryWithCategoryName:completionHandler:** metodunu çağırmalısınız. Metot parametre olarak kategori ismini almaktadır. Örnek bir kod bloğu aşağıdaki gibidir. 
 
 ```objective-c
-[[TCellNotificationManager sharedInstance] subscribeToCategoryWithDelegate:self
-      							   categoryName:@"spor"];
+[[TCellNotificationManager sharedInstance] subscribeToCategoryWithCategoryName:@"spor" completionHandler:^(id obj) {
+    if ([obj isKindOfClass:[TCellCategorySubscriptionResult class]]){
+        TCellCategorySubscriptionResult *result = (TCellCategorySubscriptionResult*)obj;
+        if (result.isSuccessfull){
+			NSLog(@"You are subscribed to category successfully.");            
+        }else{
+            NSLog(@"Error: %@ Status Code: %@", [result.error localizedDescription],result.resultCode);
+        }
+    }
+}];
 ```
 Cevap olarak **TCellCategorySubscriptionsResult** tipinde bir nesne dönmektedir. İsteğin başarılı olup olmadığını **isSuccessfull** özelliği üzerinden kontrol edebilirsiniz. 
 
 #Bildirim Kategorisi Aboneliğini Kaldırma
-Kullanıcının herhangi bir bildirim kategorisine olan aboneliğini kaldırmak için subscribeToCategoryWithDelegate metodu çağırılmalıdır. Metot parametre olarak kategori ismini almaktadır. Örnek bir kod bloğu aşağıdaki gibidir. 
+Kullanıcının herhangi bir bildirim kategorisine olan aboneliğini kaldırmak için **unSubscribeFromCategoryWithCategoryName:completionHandler:** metodu çağırılmalıdır. Metot parametre olarak kategori ismini almaktadır. Örnek bir kod bloğu aşağıdaki gibidir. 
 
 ```objective-c
-[[TCellNotificationManager sharedInstance] unSubscribeFromCategoryWithDelegate:self  
-    								categoryName:@"spor"];
+[[TCellNotificationManager sharedInstance] unSubscribeFromCategoryWithCategoryName:@"spor" completionHandler:^(id obj) {
+    if ([obj isKindOfClass:[TCellCategorySubscriptionResult class]]){
+        TCellCategorySubscriptionResult *result = (TCellCategorySubscriptionResult*)obj;
+        if (result.isSuccessfull){
+			NSLog(@"You are unsubscribed from category successfully.");
+        }else{
+            NSLog(@"Error: %@ Status Code: %@", [result.error localizedDescription],result.resultCode);
+        }
+    }
+}];
 ```
 Cevap olarak **TCellCategorySubscriptionsResult** tipinde bir nesne dönmektedir. İsteğin başarılı olup olmadığını **isSuccessfull** özelliği üzerinden kontrol edebilirsiniz. 
 
 #Bildirim Kategorisi Aboneliklerinin Alınması
-Kullanıcın abone olduğu bildirim kategorilerinin listesini almak için **getCategorySubscriptionsWithDelegate** metodu çağırılmalıdır. Örnek bir kullanım aşağıdaki gibidir. 
+Kullanıcın abone olduğu bildirim kategorilerinin listesini almak için **getCategorySubscriptionsWithCompletionHandler:** metodu çağırılmalıdır. Örnek bir kullanım aşağıdaki gibidir. 
+
 ```objective-c
-[[TCellNotificationManager sharedInstance] getCategorySubscriptionsWithDelegate:self];
+[[TCellNotificationManager sharedInstance] getCategorySubscriptionsWithCompletionHandler:^(id obj) {
+    if ([obj isKindOfClass:[TCellCategoryListQueryResult class]]){
+        TCellCategoryListQueryResult *result = (TCellCategoryListQueryResult*)obj;
+        if ([result.categories count] > 0){
+             NSLog(@"Categories: %@", [result.categories description]);
+        }else{
+    	     NSLog(@"Error: %@ Status Code: %@", [result.error localizedDescription],result.resultCode);
+        }
+                
+    }
+}];
 ```
-Bu metod cevap olarak **TCellCategoryListQueryResult** tipinde bir nesne döndürür. Nesne üzerindeki **categories** alanı üzerinden mevcut kategori listesine ulaşabilirsiniz. İsteğin başarılı olup olmadığını **isSuccessfull** özelliğinden, başarısızlık durumunda yine **TCellCategoryListQueryResult.Error** ve **TCellCategoryListQueryResult.StatusCode** özellikleri üzerinden detaylı bilgiye ulaşabilirsiniz. 
+Bu metod cevap olarak **TCellCategoryListQueryResult** tipinde bir nesne döndürür. Nesne üzerindeki **categories** alanı üzerinden mevcut kategori listesine ulaşabilirsiniz. İsteğin başarılı olup olmadığını **isSuccessfull** özelliğinden, başarısızlık durumunda yine **TCellCategoryListQueryResult.error** ve **TCellCategoryListQueryResult.resultCode** özellikleri üzerinden detaylı bilgiye ulaşabilirsiniz. 
 
 #Bildirim Geçmişinin Alınması
 Kullanıcıya o zamana kadar iletilmiş olan bildirim listesini almak için **getNotificationHistoryWithDelegate** metodu çağırılmalıdır. Metot parametre olarak sayfa sayısı ve bir sayfadaki bildirim sayısını alır. Aşağıdaki örnek kod bloğunda her biri 15 bildirimden oluşan bildirim geçmişi sayfalarından ikinci sayfa isteniyor. 
 ```objective-c
-[[TCellNotificationManager sharedInstance] getNotificationHistoryWithDelegate:self offSet:2
-           									listSize:15];
+[[TCellNotificationManager sharedInstance] getNotificationHistoryWithOffSet:1 listSize:5 completionHandler:^(id obj) {
+    if ([obj isKindOfClass:[TCellNotificationHistoryResult class]]){
+        TCellNotificationHistoryResult *result = (TCellNotificationHistoryResult*)obj;
+        if ([result.messages count] > 0){
+            NSLog(@"Messages: %@", [result.messages description]);
+        }else{
+            NSLog(@"Error: %@ Status Code: %@", [result.error localizedDescription],result.resultCode);
+        }
+    }
+}];
 ```
 
 Bu metoda cevap olarak **notificationHistoryResult** tipinde bir nesne döner. Bildirimlere bu nesne üzerindeki **messages** özelliğinden ulaşabilirsiniz. 
-

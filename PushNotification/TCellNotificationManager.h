@@ -21,70 +21,6 @@
 #import "TCellNotificationSettings.h"
 
 /*!
- * Methods that the TCellNotificationManager delegate would call back.
- */
-@protocol NotificationManagerDelegate <NSObject>
-@optional
-/*!
- * registrationResult
- *
- * To be called back when registerDeviceWithDelegate:(id<NotificationManagerDelegate>)delegate customID:(NSString *)customID receives a response.
- * \param result Inherits TCellApiResponse. Is set after registerDeviceWithDelegate receives a response.
- */
-- (void)registrationResult:(TCellRegistrationResult*)result;
-
-/*!
- * unRegistrationResult
- *
- * To be called back when unRegisterDeviceWithDelegate:(id<NotificationManagerDelegate>)delegate receives a response.
- * \param result Inherits TCellApiResponse. Is set after unRegisterDeviceWithDelegate receives a response.
- */
-- (void)unRegistrationResult:(TCellRegistrationResult*)result;
-
-/*!
- * registrationResult
- *
- * To be called back when getCategoryListWithDelegate:(id<NotificationManagerDelegate>)delegate receives a response.
- * \param result Inherits TCellApiResponse. Is set after getCategoryListWithDelegate receives a response.
- */
-- (void)categoryListQueryResult:(TCellCategoryListQueryResult*)result;
-
-/*!
- * registrationResult
- *
- * To be called back when getCategorySubscriptionsWithDelegate:(id<NotificationManagerDelegate>)delegate receives a response.
- * \param result Inherits TCellApiResponse. Is set after getCategorySubscriptionsWithDelegate receives a response.
- */
-- (void)categoriesSubscribedToResult:(TCellCategoryListQueryResult*)result;
-
-/*!
- * notificationHistoryResult
- *
- * To be called back when getNotificationHistoryWithDelegate:(id<NotificationManagerDelegate>)delegate offSet:(int)offSet listSize:(int)listSize; receives a response.
- * \param result Inherits TCellApiResponse. Is set after getNotificationHistoryWithDelegate receives a response.
- */
-- (void)notificationHistoryResult:(TCellNotificationHistoryResult*)result;
-
-/*!
- * subscribeToCategoryResult
- *
- * To be called back when subscribeToCategoryWithDelegate:(id<NotificationManagerDelegate>)delegate categoryName:(NSString*)categoryName receives a response.
- * \param result Inherits TCellApiResponse. Is set after registerDeviceWithDelegate receives a response.
- */
-- (void)subscribeToCategoryResult:(TCellCategorySubscriptionResult*)result;
-
-/*!
- * unSubscribeFromCategoryResult
- *
- * To be called back when unSubscribeFromCategoryWithDelegate:(id<NotificationManagerDelegate>)delegate categoryName:(NSString*)categoryName receives a response.
- * \param result Inherits TCellApiResponse. Is set after unSubscribeFromCategoryWithDelegate receives a response.
- */
-- (void)unSubscribeFromCategoryResult:(TCellCategorySubscriptionResult*)result;
-@end
-
-
-
-/*!
  * Is a singleton class that has the main functionalities of push notificaton framework. 
  * Provides application to register for remote notifications and communication with server.
  */
@@ -117,7 +53,6 @@
  */
 - (void)setNotificationDeviceTokenWithString:(NSString *)deviceToken;
 
-
 /*!
  * Checks if the device token is set.
  *
@@ -141,56 +76,52 @@
 /*!
  * Registers device to push notification center.
  *
- * \param delegate Class that implements NotificationManagerDelegate protocol.
  * \param customID holds any string to send to push server for an alternative identification of the client
  * \param genericParam holds any string to send to push server for any other parameter such as resolution etc.
+ * \param completionBlock A block object to be executed when the responce is received from server. obj is the response object from server.
  */
-- (void)registerDeviceWithDelegate:(id<NotificationManagerDelegate>)delegate customID:(NSString *)customID  genericParam:(NSString *)genericParam;
+- (void)registerDeviceWithCustomID:(NSString *)customID  genericParam:(NSString *)genericParam completionHandler:(void(^)(id obj))completionBlock;
 
 /*!
  * Unregisters device from push notification center.
- *
- * \param delegate Class that implements NotificationManagerDelegate protocol.
+ * \param completionBlock A block object to be executed when the responce is received from server. obj is the response object from server.
  */
-- (void)unRegisterDeviceWithDelegate:(id<NotificationManagerDelegate>)delegate;
-
+- (void)unRegisterDeviceWithCompletionHandler:(void(^)(id obj))completionBlock;
 /*!
  * Gets the category list of the notification categories which you can subscribe to.
- *
- * \param delegate Class that implements NotificationManagerDelegate protocol.
+ * \param completionBlock A block object to be executed when the responce is received from server. obj is the response object from server.
  */
-- (void)getCategoryListWithDelegate:(id<NotificationManagerDelegate>)delegate;
+- (void)getCategoryListWithCompletionHandler:(void(^)(id obj))completionBlock;
 
 /*!
  * Gets the category list of the notification categories which the application is subscribe to.
- *
- * \param delegate Class that implements NotificationManagerDelegate protocol.
+ * \param completionBlock A block object to be executed when the responce is received from server. obj is the response object from server.
  */
-- (void)getCategorySubscriptionsWithDelegate:(id<NotificationManagerDelegate>)delegate;
+- (void)getCategorySubscriptionsWithCompletionHandler:(void(^)(id obj))completionBlock;
 
 /*!
  * Gets a list of a push notification history.
  *
- * \param delegate Class that implements NotificationManagerDelegate protocol.
  * \param offSet Value of the start row of the list.
  * \param listSize Value of the row count to be listed.
+ * \param completionBlock A block object to be executed when the responce is received from server. obj is the response object from server.
  */
-- (void)getNotificationHistoryWithDelegate:(id<NotificationManagerDelegate>)delegate offSet:(int)offSet listSize:(int)listSize;
+- (void)getNotificationHistoryWithOffSet:(int)offSet listSize:(int)listSize completionHandler:(void(^)(id obj))completionBlock;
 
 /*!
  * Subscribes to a pushnotification category.
  *
- * \param delegate Class that implements NotificationManagerDelegate protocol.
  * \param categoryName Name of the caretogry which intends to be unsubsscribed.
+ * \param completionBlock A block object to be executed when the responce is received from server. obj is the response object from server.
  */
-- (void)subscribeToCategoryWithDelegate:(id<NotificationManagerDelegate>)delegate categoryName:(NSString*)categoryName;
+- (void)subscribeToCategoryWithCategoryName:(NSString*)categoryName completionHandler:(void(^)(id obj))completionBlock;
 
 /*!
  * Unsubscribes from a push notification category.
  *
- * \param delegate Class that implements NotificationManagerDelegate protocol.
  * \param categoryName Name of the caretogry which intends to be unsubsscribed.
+ * \param completionBlock A block object to be executed when the responce is received from server. obj is the response object from server.
  */
-- (void)unSubscribeFromCategoryWithDelegate:(id<NotificationManagerDelegate>)delegate categoryName:(NSString*)categoryName;
+- (void)unSubscribeFromCategoryWithCategoryName:(NSString*)categoryName completionHandler:(void(^)(id obj))completionBlock;
 
 @end

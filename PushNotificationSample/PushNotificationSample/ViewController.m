@@ -19,7 +19,7 @@
 #import "ViewController.h"
 #import "TableViewController.h"
 
-@interface ViewController ()<NotificationManagerDelegate>
+@interface ViewController ()
 
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 @property (strong, nonatomic) NSArray *dataArray;
@@ -52,105 +52,112 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Registration method and delegate call back
+#pragma mark - Registration method
 - (IBAction)registerDeviceButtonPressed:(UIButton *)sender {
     if ([self.man hasDeviceToken]){
         self.spinner.hidden = NO;
-        [[TCellNotificationManager sharedInstance] registerDeviceWithDelegate:self customID:@"" genericParam:@"genericParamTest"];
+        [[TCellNotificationManager sharedInstance] registerDeviceWithCustomID:@"" genericParam:@"genericParamTest" completionHandler:^(id obj) {
+            if ([obj isKindOfClass:[TCellRegistrationResult class]]){
+                TCellRegistrationResult *result = (TCellRegistrationResult*)obj;
+                self.spinner.hidden = YES;
+                if (result.isSuccessfull){
+                    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:@"Device is registered to push server." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+                    [alert show];
+                }else{
+                    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:[result.error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+                    [alert show];
+                }
+            }
+            
+        }];
     }
 }
 
-- (void)registrationResult:(TCellRegistrationResult*)result{
-    self.spinner.hidden = YES;
-    if (result.isSuccessfull){
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:@"Device is registered to push server." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
-        [alert show];
-    }else{
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:[result.error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
-        [alert show];
-    }
-}
-
-#pragma mark - Registration method and delegate call back
+#pragma mark - Unregistration method
 - (IBAction)unRegisterDeviceButtonPressed:(UIButton *)sender {
     if ([self.man hasDeviceToken]){
         self.spinner.hidden = NO;
-        [[TCellNotificationManager sharedInstance] unRegisterDeviceWithDelegate:self];
+        [[TCellNotificationManager sharedInstance] unRegisterDeviceWithCompletionHandler:^(id obj) {
+            if ([obj isKindOfClass:[TCellRegistrationResult class]]){
+                TCellRegistrationResult *result = (TCellRegistrationResult*)obj;
+                self.spinner.hidden = YES;
+                if (result.isSuccessfull){
+                    //[[TCellNotificationManager sharedInstance] unRegisterApplicationForRemoteNotificationTypes];//removes application from notification center
+                    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:@"Device is unregistered from push server." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+                    [alert show];
+                }else{
+                    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:[result.error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+                    [alert show];
+                }
+            }
+            
+        }];
     }
 }
 
-- (void)unRegistrationResult:(TCellRegistrationResult*)result{
-    self.spinner.hidden = YES;
-    if (result.isSuccessfull){
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:@"Device is unregistered from push server." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
-        [alert show];
-    }else{
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:[result.error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
-        [alert show];
-    }
-}
-
-#pragma mark - Get category list method and delegate call back
+#pragma mark - Get category list method
 - (IBAction)getCategoryListButtonPressed:(UIButton *)sender {
     if ([self.man hasDeviceToken]){
         self.spinner.hidden = NO;
-        [[TCellNotificationManager sharedInstance] getCategoryListWithDelegate:self];
+        [[TCellNotificationManager sharedInstance] getCategoryListWithCompletionHandler:^(id obj) {
+            if ([obj isKindOfClass:[TCellCategoryListQueryResult class]]){
+                TCellCategoryListQueryResult *result = (TCellCategoryListQueryResult*)obj;
+                self.spinner.hidden = YES;
+                if ([result.categories count] > 0){
+                    self.dataArray = result.categories;
+                    self.dataTypeInTable = DataTypeInTableCategoryList;
+                    [self performSegueWithIdentifier:@"TableVC" sender:self];
+                }else{
+                    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:[result.error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+                    [alert show];
+                }
+            }
+        }];
     }
 }
 
-- (void)categoryListQueryResult:(TCellCategoryListQueryResult*)result{
-    self.spinner.hidden = YES;
-    if ([result.categories count] > 0){
-        self.dataArray = result.categories;
-        self.dataTypeInTable = DataTypeInTableCategoryList;
-        [self performSegueWithIdentifier:@"TableVC" sender:self];
-    }else{
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:[result.error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
-        [alert show];
-    }
-}
-
-#pragma mark - Get subscribed category list method and delegate call back
+#pragma mark - Get subscribed category list method
 - (IBAction)getSubscribedCategoryPressed:(UIButton *)sender {
     if ([self.man hasDeviceToken]){
         self.spinner.hidden = NO;
-        [[TCellNotificationManager sharedInstance] getCategorySubscriptionsWithDelegate:self];
+        [[TCellNotificationManager sharedInstance] getCategorySubscriptionsWithCompletionHandler:^(id obj) {
+            if ([obj isKindOfClass:[TCellCategoryListQueryResult class]]){
+                TCellCategoryListQueryResult *result = (TCellCategoryListQueryResult*)obj;
+                self.spinner.hidden = YES;
+                if ([result.categories count] > 0){
+                    self.dataArray = result.categories;
+                    self.dataTypeInTable = DataTypeInTableSubscribedCategoryList;
+                    [self performSegueWithIdentifier:@"TableVC" sender:self];
+                }else{
+                    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:[result.error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+                    [alert show];
+                }
+                
+            }
+        }];
     }
 }
 
-- (void)categoriesSubscribedToResult:(TCellCategoryListQueryResult*)result{
-    self.spinner.hidden = YES;
-    if ([result.categories count] > 0){
-        self.dataArray = result.categories;
-        self.dataTypeInTable = DataTypeInTableSubscribedCategoryList;
-        [self performSegueWithIdentifier:@"TableVC" sender:self];
-    }else{
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:[result.error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
-        [alert show];
-    }
-}
-
-#pragma mark - Get notification history method and delegate call back
+#pragma mark - Get notification history method
 - (IBAction)getNotificationHistory:(UIButton *)sender {
     if ([self.man hasDeviceToken]){
         self.spinner.hidden = NO;
-        [[TCellNotificationManager sharedInstance] getNotificationHistoryWithDelegate:self offSet:1 listSize:5];
+        [[TCellNotificationManager sharedInstance] getNotificationHistoryWithOffSet:1 listSize:5 completionHandler:^(id obj) {
+            if ([obj isKindOfClass:[TCellNotificationHistoryResult class]]){
+                TCellNotificationHistoryResult *result = (TCellNotificationHistoryResult*)obj;
+                self.spinner.hidden = YES;
+                if ([result.messages count] > 0){
+                    self.dataArray = result.messages;
+                    self.dataTypeInTable = DataTypeInTableNotificationHistoryList;
+                    [self performSegueWithIdentifier:@"TableVC" sender:self];
+                }else{
+                    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:[result.error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+                    [alert show];
+                }
+            }
+        }];
     }
 }
-
-- (void)notificationHistoryResult:(TCellNotificationHistoryResult*)result
-{
-    self.spinner.hidden = YES;
-    if ([result.messages count] > 0){
-        self.dataArray = result.messages;
-        self.dataTypeInTable = DataTypeInTableNotificationHistoryList;
-        [self performSegueWithIdentifier:@"TableVC" sender:self];
-    }else{
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:[result.error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
-        [alert show];
-    }
-}
-
 
 #pragma mark - Segue methods
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

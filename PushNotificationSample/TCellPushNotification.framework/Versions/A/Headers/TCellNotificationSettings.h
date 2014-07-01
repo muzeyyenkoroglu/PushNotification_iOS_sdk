@@ -42,9 +42,6 @@
  */
 @property(assign, nonatomic) UIRemoteNotificationType notificationTypes;
 
-
-
-
 /*!
  * Creates an TCellNotificationSettings object initialized with the notification settings.
  * \param appId Application ID which is provided by push notification center.

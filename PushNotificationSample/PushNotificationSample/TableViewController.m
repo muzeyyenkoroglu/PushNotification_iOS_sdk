@@ -21,7 +21,7 @@
 #define SUBSCRIBED_ALERT_TAG 1
 #define UNSUBSCRIBED_ALERT_TAG 2
 
-@interface TableViewController () <UIAlertViewDelegate, NotificationManagerDelegate>
+@interface TableViewController () <UIAlertViewDelegate>
 
 @property(strong,nonatomic) TCellNotificationManager* man;
 @property(strong,nonatomic) NSString* selectedItemTitle;
@@ -113,42 +113,41 @@
         if (alertView.tag == UNSUBSCRIBED_ALERT_TAG || alertView.tag == SUBSCRIBED_ALERT_TAG)
             return;
         else if (self.dataTypeInTable == DataTypeInTableCategoryList)
-            [[TCellNotificationManager sharedInstance] subscribeToCategoryWithDelegate:self categoryName:self.selectedItemTitle];
+            [[TCellNotificationManager sharedInstance] subscribeToCategoryWithCategoryName:self.selectedItemTitle completionHandler:^(id obj) {
+                if ([obj isKindOfClass:[TCellCategorySubscriptionResult class]]){
+                    TCellCategorySubscriptionResult *result = (TCellCategorySubscriptionResult*)obj;
+                    if (result.isSuccessfull){
+                        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Subscription" message:[NSString stringWithFormat:@"You are subscribed to %@ category successfully.", self.selectedItemTitle] delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+                        alert.tag = SUBSCRIBED_ALERT_TAG;
+                        [alert show];
+                    }else{
+                        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Subscription" message:[result.error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+                        alert.tag = SUBSCRIBED_ALERT_TAG;
+                        [alert show];
+                    }
+                }
+            }];
         else if (self.dataTypeInTable == DataTypeInTableSubscribedCategoryList)
-            [[TCellNotificationManager sharedInstance] unSubscribeFromCategoryWithDelegate:self categoryName:self.selectedItemTitle];
+            [[TCellNotificationManager sharedInstance] unSubscribeFromCategoryWithCategoryName:self.selectedItemTitle completionHandler:^(id obj) {
+                if ([obj isKindOfClass:[TCellCategorySubscriptionResult class]]){
+                    TCellCategorySubscriptionResult *result = (TCellCategorySubscriptionResult*)obj;
+                    if (result.isSuccessfull){
+                        NSMutableArray *array = [[NSMutableArray alloc] initWithArray:self.dataArray];
+                        [array removeObjectAtIndex:self.selectedItemIndex];
+                        self.dataArray = array;
+                        [self.tableView reloadData];
+                        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Subscription" message:[NSString stringWithFormat:@"You are unsubscribed from %@ category successfully.", self.selectedItemTitle] delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+                        alert.tag = UNSUBSCRIBED_ALERT_TAG;
+                        [alert show];
+                    }else{
+                        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Subscription" message:[result.error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+                        alert.tag = UNSUBSCRIBED_ALERT_TAG;
+                        [alert show];
+                    }
+                }
+            }];
     }
     
-}
-
-- (void)subscribeToCategoryResult:(TCellCategorySubscriptionResult*)result
-{
-    if (result.isSuccessfull){
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Subscription" message:[NSString stringWithFormat:@"You are subscribed to %@ category successfully.", self.selectedItemTitle] delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
-        alert.tag = SUBSCRIBED_ALERT_TAG;
-        [alert show];
-    }else{
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Subscription" message:[result.error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
-        alert.tag = SUBSCRIBED_ALERT_TAG;
-        [alert show];
-    }
-}
-
-
-- (void)unSubscribeFromCategoryResult:(TCellCategorySubscriptionResult*)result
-{
-    if (result.isSuccessfull){
-        NSMutableArray *array = [[NSMutableArray alloc] initWithArray:self.dataArray];
-        [array removeObjectAtIndex:self.selectedItemIndex];
-        self.dataArray = array;
-        [self.tableView reloadData];
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Subscription" message:[NSString stringWithFormat:@"You are unsubscribed from %@ category successfully.", self.selectedItemTitle] delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
-        alert.tag = UNSUBSCRIBED_ALERT_TAG;
-        [alert show];
-    }else{
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Subscription" message:[result.error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
-        alert.tag = UNSUBSCRIBED_ALERT_TAG;
-        [alert show];
-    }
 }
 
 @end
