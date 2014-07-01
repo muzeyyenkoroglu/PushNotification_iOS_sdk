@@ -114,7 +114,8 @@ Kayıt olmanın yanı sıra bir uygulama push bildirimleri almayı kesmek te ger
         }
     }
             
-}];```
+}];
+```
 
 result değişkeninden **isSuccessfull** değerini kontrol ederek başarılı ise uygulamayı Notification Center’ dan kaldırabilirsiniz. Bunun için aşağıdaki satırı eklemek yeterli olacaktır.
 ```objective-c
