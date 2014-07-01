@@ -24,7 +24,7 @@ Güvenlik Anahtarı | Sizin belirlediğiniz bir SecretKey
 Bu bilgiler ile birlikte uygulamanız oluşturulduğunda size ApplicationId bilgisi iletilecek. *ApplicationId ve SecretKey SDK için bulunması zorunlu iki değerdir.*
 
 ##SDK Metodları
-Turkcell Push SDK’nın en önemli sınıfı **TCellNotificationManager** sınıfıdır. İşlemlerin hemen hepsi bu sınıfın üzerindeki **sharedInstance** özelliği üzerinde yapılmaktadır.
+Turkcell Push SDK’nın en önemli sınıfı **TCellNotificationManager** sınıfıdır. İşlemlerin hemen hepsi bu sınıfın üzerindeki **sharedInstance** singleton örneği üzerinde yapılmaktadır.
 
 
 ##Ayarların Atanması
