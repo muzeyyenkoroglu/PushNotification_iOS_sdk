@@ -24,7 +24,7 @@ Güvenlik Anahtarı | Sizin belirlediğiniz bir SecretKey
 Bu bilgiler ile birlikte uygulamanız oluşturulduğunda size ApplicationId bilgisi iletilecek. *ApplicationId ve SecretKey SDK için bulunması zorunlu iki değerdir.*
 
 ##SDK Metodları
-Turkcell Push SDK’nın en önemli sınıfı **TCellNotificationManager** sınıfıdır. İşlemlerin hemen hepsi bu sınıfın üzerindeki **sharedInstance** özelliği üzerinde yapılmaktadır.
+Turkcell Push SDK’nın en önemli sınıfı **TCellNotificationManager** sınıfıdır. İşlemlerin hemen hepsi bu sınıfın üzerindeki **sharedInstance** singleton örneği üzerinde yapılmaktadır.
 
 
 ##Ayarların Atanması
@@ -114,9 +114,10 @@ Kayıt olmanın yanı sıra bir uygulama push bildirimleri almayı kesmek te ger
         }
     }
             
-}];```
+}];
+```
 
-result değişkeninden **isSuccessfull** değerini kontrol ederek başarılı ise uygulamayı Notification Center’ dan kaldırabilirsiniz. Bunun için aşağıdaki satırı eklemek yeterli olacaktır.
+**result** değişkeninden **isSuccessfull** değerini kontrol ederek, başarılı ise uygulamayı Notification Center’ dan kaldırabilirsiniz. Bunun için aşağıdaki satırı eklemek yeterli olacaktır.
 ```objective-c
 [[TCellNotificationManager sharedInstance] unRegisterApplicationForRemoteNotificationTypes];
 ```
