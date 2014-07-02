@@ -111,6 +111,8 @@
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
 - (void)makeRequestWithBaseURL:(NSString*)baseURL path:(NSString*)path selector:(SEL)selector completion:(void(^)(id obj))completionBlock
 {
+    self.completionHandler = completionBlock;
+    
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:baseURL]];
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
                                                             path:path
@@ -134,9 +136,7 @@
 }
 
 - (void)registerDeviceWithCustomID:(NSString *)customID genericParam:(NSString *)genericParam completionHandler:(void(^)(id obj))completionBlock
-{
-    self.completionHandler = completionBlock;
-    
+{    
     NSString* path = [NSString stringWithFormat:@"%@%@/%@",REGISTRATION_PATH,self.notificationSettings.appId,self.deviceToken];
     
     

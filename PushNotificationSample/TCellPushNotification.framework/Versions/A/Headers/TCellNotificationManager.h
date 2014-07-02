@@ -78,20 +78,24 @@
  *
  * \param customID holds any string to send to push server for an alternative identification of the client
  * \param genericParam holds any string to send to push server for any other parameter such as resolution etc.
+ * \param completionBlock A block object to be executed when the responce is received from server. obj is the response object from server.
  */
 - (void)registerDeviceWithCustomID:(NSString *)customID  genericParam:(NSString *)genericParam completionHandler:(void(^)(id obj))completionBlock;
 
 /*!
  * Unregisters device from push notification center.
+ * \param completionBlock A block object to be executed when the responce is received from server. obj is the response object from server.
  */
 - (void)unRegisterDeviceWithCompletionHandler:(void(^)(id obj))completionBlock;
 /*!
  * Gets the category list of the notification categories which you can subscribe to.
+ * \param completionBlock A block object to be executed when the responce is received from server. obj is the response object from server.
  */
 - (void)getCategoryListWithCompletionHandler:(void(^)(id obj))completionBlock;
 
 /*!
  * Gets the category list of the notification categories which the application is subscribe to.
+ * \param completionBlock A block object to be executed when the responce is received from server. obj is the response object from server.
  */
 - (void)getCategorySubscriptionsWithCompletionHandler:(void(^)(id obj))completionBlock;
 
@@ -100,6 +104,7 @@
  *
  * \param offSet Value of the start row of the list.
  * \param listSize Value of the row count to be listed.
+ * \param completionBlock A block object to be executed when the responce is received from server. obj is the response object from server.
  */
 - (void)getNotificationHistoryWithOffSet:(int)offSet listSize:(int)listSize completionHandler:(void(^)(id obj))completionBlock;
 
@@ -107,6 +112,7 @@
  * Subscribes to a pushnotification category.
  *
  * \param categoryName Name of the caretogry which intends to be unsubsscribed.
+ * \param completionBlock A block object to be executed when the responce is received from server. obj is the response object from server.
  */
 - (void)subscribeToCategoryWithCategoryName:(NSString*)categoryName completionHandler:(void(^)(id obj))completionBlock;
 
@@ -114,6 +120,7 @@
  * Unsubscribes from a push notification category.
  *
  * \param categoryName Name of the caretogry which intends to be unsubsscribed.
+ * \param completionBlock A block object to be executed when the responce is received from server. obj is the response object from server.
  */
 - (void)unSubscribeFromCategoryWithCategoryName:(NSString*)categoryName completionHandler:(void(^)(id obj))completionBlock;
 

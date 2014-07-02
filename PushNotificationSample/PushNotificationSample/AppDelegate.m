@@ -34,7 +34,7 @@
     man.notificationSettings = settings;
     [man registerApplicationForRemoteNotificationTypes];
 #if DEBUG
-    [[TCellNotificationManager sharedInstance] setNotificationDeviceTokenWithString:@"test_token"];
+    [[TCellNotificationManager sharedInstance] setNotificationDeviceTokenWithString:@"your_test_token"];//This is usually for testing on simulator. You may use a unique id.
 #endif
     return YES;
 }
