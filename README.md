@@ -14,14 +14,8 @@ TCellPushNotification.framework’ u projeye eklemek için Xcode’ ta açık ol
 Ayrıca projenize MobileCoreServices.framework ve SystemConfiguration.framework kütüphanelerini eklemelisiniz.
 
 ##Turkcell Push Server Üzerinde Uygulamanın Oluşturulması
-Uygulamanıza Turkcell Push SDK entegrasyonu yapabilmeniz için öncelikle Push Server üzerinde uygulama kaydı oluşturmalısınız. Bir iOS uygulamasını Push Server’a kaydetmek için aşağıdaki bilgiler ile Push Server sorumlusuna başvurmanız gerekmektedir. 
-
-Alan İsmi | Alan Açıklaması  
------------- | ------------- 
-Uygulama Adı | Push Server üzerinde uygulamanıza vermek istediğiniz isim. Uygulamanızın birden fazla platformda yer alabileceğini düşünerek uygulama isminde platform adına da yer vermek faydalı olabilir.   
-Güvenlik Anahtarı | Sizin belirlediğiniz bir SecretKey  
-
-Bu bilgiler ile birlikte uygulamanız oluşturulduğunda size ApplicationId bilgisi iletilecek. *ApplicationId ve SecretKey SDK için bulunması zorunlu iki değerdir.*
+Uygulamanıza Turkcell Push SDK entegrasyonu yapabilmeniz için öncelikle Push Server (http://pushserver.turkcell.com.tr)
+ üzerinde uygulama kaydı oluşturmalısınız. Uygulamayı oluşturduktan sonra iOS Ayarları bölümünden ApplicationId ve SecretKey bilgisini alabilirsiniz. *ApplicationId ve SecretKey SDK için bulunması zorunlu iki değerdir.*
 
 ##SDK Metodları
 Turkcell Push SDK’nın en önemli sınıfı **TCellNotificationManager** sınıfıdır. İşlemlerin hemen hepsi bu sınıfın üzerindeki **sharedInstance** singleton örneği üzerinde yapılmaktadır.
