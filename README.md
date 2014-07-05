@@ -50,7 +50,7 @@ Buradaki **ApplicationId** ve **SecretKey** değerleri belirtilmesi zorunlu alan
 Alan Adı | Açıklaması | Zorunlu mu ?
 ------------ | ------------- | ------------
 appId Cell | PushServer üzerinde uygulamanız oluşturulduğunda size iletilen ApplicationId değeri.   | Evet
-secretKey Cell | PushServer üzerinde uygulamanızın oluşturulması için oluşturup yetkili kişiye bildirdiğiniz SecretKey değeri.  | Evet
+secretKey Cell | PushServer üzerinde uygulamanız oluşturulduğunda size iletilen SecretKey değeri.  | Evet
 notificationTypes|UIRemoteNotificationTypeNone, UIRemoteNotificationTypeBadge, UIRemoteNotificationTypeSound, UIRemoteNotificationTypeAlert, UIRemoteNotificationTypeNewsstandContentAvailability değerlerinden birini veya birkaçını alabilir. | Evet
 
 
