@@ -192,7 +192,7 @@ Kullanıcın abone olduğu bildirim kategorilerinin listesini almak için **getC
 Bu metod cevap olarak **TCellCategoryListQueryResult** tipinde bir nesne döndürür. Nesne üzerindeki **categories** alanı üzerinden mevcut kategori listesine ulaşabilirsiniz. İsteğin başarılı olup olmadığını **isSuccessfull** özelliğinden, başarısızlık durumunda yine **TCellCategoryListQueryResult.error** ve **TCellCategoryListQueryResult.resultCode** özellikleri üzerinden detaylı bilgiye ulaşabilirsiniz. 
 
 #Bildirim Geçmişinin Alınması
-Kullanıcıya o zamana kadar iletilmiş olan bildirim listesini almak için **getNotificationHistoryWithDelegate** metodu çağırılmalıdır. Metot parametre olarak sayfa sayısı ve bir sayfadaki bildirim sayısını alır. Aşağıdaki örnek kod bloğunda her biri 15 bildirimden oluşan bildirim geçmişi sayfalarından ikinci sayfa isteniyor. 
+Kullanıcıya o zamana kadar iletilmiş olan bildirim listesini almak için **getNotificationHistoryWithOffSet:listSize:completionHandler:** metodu çağırılmalıdır. Metot parametre olarak sayfa sayısı ve bir sayfadaki bildirim sayısını alır. Aşağıdaki örnek kod bloğunda her biri 15 bildirimden oluşan bildirim geçmişi sayfalarından ikinci sayfa isteniyor. 
 ```objective-c
 [[TCellNotificationManager sharedInstance] getNotificationHistoryWithOffSet:1 listSize:5 completionHandler:^(id obj) {
     if ([obj isKindOfClass:[TCellNotificationHistoryResult class]]){
@@ -206,4 +206,4 @@ Kullanıcıya o zamana kadar iletilmiş olan bildirim listesini almak için **ge
 }];
 ```
 
-Bu metoda cevap olarak **notificationHistoryResult** tipinde bir nesne döner. Bildirimlere bu nesne üzerindeki **messages** özelliğinden ulaşabilirsiniz. 
+Bu metoda cevap olarak **TCellNotificationHistoryResult** tipinde bir nesne döner. Bildirimlere bu nesne üzerindeki **messages** özelliğinden ulaşabilirsiniz. 
