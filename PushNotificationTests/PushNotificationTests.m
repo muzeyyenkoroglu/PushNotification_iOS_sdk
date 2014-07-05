@@ -68,19 +68,12 @@ NSDictionary* registerResultDictionary;
     [[TCellNotificationManager sharedInstance] registerDeviceWithCustomID:@"" genericParam:@"genericParamTest" completionHandler:^(id obj) {
         if ([obj isKindOfClass:[TCellRegistrationResult class]]){
             TCellRegistrationResult *result = (TCellRegistrationResult*)obj;
-            if (result.isSuccessfull){
-                NSLog(@"Device is registered to push server.");
-                XCTAssertTrue([result isSuccessfull],"Device registration");
-            }else{
-                NSLog(@"Error: %@ Status Code: %@", [result.error localizedDescription],result.resultCode);
-                XCTAssertFalse([result isSuccessfull],"Device registration");
-            }
+            XCTAssertTrue([result isSuccessfull],"Device registration");
             resultRetrieved = YES;
         }            
     }];
     
-    NSRunLoop *theRL = [NSRunLoop currentRunLoop];
-    while (!resultRetrieved && [theRL runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:10]]);
+    while (!resultRetrieved && [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:10]]);
 }
 
 #pragma mark - testGetCategoryListFromPushServer
@@ -91,13 +84,8 @@ NSDictionary* registerResultDictionary;
     [[TCellNotificationManager sharedInstance] getCategoryListWithCompletionHandler:^(id obj) {
         if ([obj isKindOfClass:[TCellCategoryListQueryResult class]]){
             TCellCategoryListQueryResult *result = (TCellCategoryListQueryResult*)obj;
-            if ([result.categories count] > 0){
-                NSLog(@"Categories: %@", [result.categories description]);
-                XCTAssertTrue([result isSuccessfull],"Get category list");
-            }else{
-                NSLog(@"Error: %@ Status Code: %@", [result.error localizedDescription],result.resultCode);
-                XCTAssertFalse([result isSuccessfull],"Get category list");
-            }
+            //XCTAssertTrue([result isSuccessfull] && [result.categories count] > 0,"Get category list");
+            XCTAssertTrue([result isSuccessfull],"Get category list");
             resultRetrieved = YES;
         }
     }];
@@ -114,13 +102,7 @@ NSDictionary* registerResultDictionary;
     [[TCellNotificationManager sharedInstance] subscribeToCategoryWithCategoryName:@"spor" completionHandler:^(id obj) {
         if ([obj isKindOfClass:[TCellCategorySubscriptionResult class]]){
             TCellCategorySubscriptionResult *result = (TCellCategorySubscriptionResult*)obj;
-            if (result.isSuccessfull){
-                NSLog(@"You are subscribed to category successfully.");
-                XCTAssertTrue([result isSuccessfull],"Subscribed to category");
-            }else{
-                NSLog(@"Error: %@ Status Code: %@", [result.error localizedDescription],result.resultCode);
-                XCTAssertFalse([result isSuccessfull],"Subscribed to category");
-            }
+            XCTAssertTrue([result isSuccessfull],"Subscribed to category");
             resultRetrieved = YES;
         }
     }];
@@ -136,13 +118,8 @@ NSDictionary* registerResultDictionary;
     [[TCellNotificationManager sharedInstance] getCategorySubscriptionsWithCompletionHandler:^(id obj) {
         if ([obj isKindOfClass:[TCellCategoryListQueryResult class]]){
             TCellCategoryListQueryResult *result = (TCellCategoryListQueryResult*)obj;
-            if ([result.categories count] > 0){
-                NSLog(@"Categories: %@", [result.categories description]);
-                XCTAssertTrue([result isSuccessfull],"Get subscribed category list.");
-            }else{
-                NSLog(@"Error: %@ Status Code: %@", [result.error localizedDescription],result.resultCode);
-                XCTAssertFalse([result isSuccessfull],"Get subscribed category list.");
-            }
+            //XCTAssertTrue([result isSuccessfull] && [result.categories count] > 0,"Get subscribed category list.");
+            XCTAssertTrue([result isSuccessfull],"Get subscribed category list.");
             resultRetrieved = YES;
         }
     }];
@@ -159,13 +136,7 @@ NSDictionary* registerResultDictionary;
     [[TCellNotificationManager sharedInstance] unSubscribeFromCategoryWithCategoryName:@"spor" completionHandler:^(id obj) {
         if ([obj isKindOfClass:[TCellCategorySubscriptionResult class]]){
             TCellCategorySubscriptionResult *result = (TCellCategorySubscriptionResult*)obj;
-            if (result.isSuccessfull){
-                NSLog(@"You are unsubscribed from category successfully.");
-                XCTAssertTrue([result isSuccessfull],"Unsubscribed from category.");
-            }else{
-                NSLog(@"Error: %@ Status Code: %@", [result.error localizedDescription],result.resultCode);
-                XCTAssertFalse([result isSuccessfull],"Unsubscribed from category.");
-            }
+            XCTAssertTrue([result isSuccessfull],"Unsubscribed from category.");
             resultRetrieved = YES;
         }
     }];
@@ -182,13 +153,8 @@ NSDictionary* registerResultDictionary;
     [[TCellNotificationManager sharedInstance] getNotificationHistoryWithOffSet:1 listSize:5 completionHandler:^(id obj) {
         if ([obj isKindOfClass:[TCellNotificationHistoryResult class]]){
             TCellNotificationHistoryResult *result = (TCellNotificationHistoryResult*)obj;
-            if ([result.messages count] > 0){
-                NSLog(@"Messages: %@", [result.messages description]);
-                XCTAssertTrue([result isSuccessfull],"Get notification history.");
-            }else{
-                NSLog(@"Error: %@ Status Code: %@", [result.error localizedDescription],result.resultCode);
-                XCTAssertFalse([result isSuccessfull],"Get notification history.");
-            }
+            //XCTAssertTrue([result isSuccessfull] && [result.messages count] > 0,"Get notification history.");
+            XCTAssertTrue([result isSuccessfull],"Get notification history.");
             resultRetrieved = YES;
         }
     }];
@@ -205,13 +171,7 @@ NSDictionary* registerResultDictionary;
     [[TCellNotificationManager sharedInstance] unRegisterDeviceWithCompletionHandler:^(id obj) {
         if ([obj isKindOfClass:[TCellRegistrationResult class]]){
             TCellRegistrationResult *result = (TCellRegistrationResult*)obj;
-            if (result.isSuccessfull){
-                NSLog(@"Device is unregistered from push server.");
-                XCTAssertTrue([result isSuccessfull],"Device unregistration");
-            }else{
-                NSLog(@"Error: %@ Status Code: %@", [result.error localizedDescription],result.resultCode);
-                XCTAssertFalse([result isSuccessfull],"Device unregistration");
-            }
+            XCTAssertTrue([result isSuccessfull],"Device unregistration");
             resultRetrieved = YES;
         }
         
