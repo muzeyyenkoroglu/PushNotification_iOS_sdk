@@ -61,7 +61,7 @@ NSDictionary* registerResultDictionary;
 }
 
 #pragma mark - testRegisterDeviceToPushServer
-- (void)testRegisterDeviceToPushServer
+- (void)test1_RegisterDeviceToPushServer
 {
     __block BOOL resultRetrieved = NO;
     
@@ -77,7 +77,7 @@ NSDictionary* registerResultDictionary;
 }
 
 #pragma mark - testGetCategoryListFromPushServer
-- (void)testGetCategoryListFromPushServer
+- (void)test2_GetCategoryListFromPushServer
 {
     __block BOOL resultRetrieved = NO;
     
@@ -95,7 +95,7 @@ NSDictionary* registerResultDictionary;
 }
 
 #pragma mark - testSubscribeToCategoryInPushServer
-- (void)testSubscribeToCategoryInPushServer
+- (void)test3_SubscribeToCategoryInPushServer
 {
     __block BOOL resultRetrieved = NO;
     
@@ -111,7 +111,7 @@ NSDictionary* registerResultDictionary;
 }
 
 #pragma mark - testGetSubscribedCategoriesFromPushServer
-- (void)testGetSubscribedCategoriesFromPushServer
+- (void)test4_GetSubscribedCategoriesFromPushServer
 {
     __block BOOL resultRetrieved = NO;
     
@@ -129,7 +129,7 @@ NSDictionary* registerResultDictionary;
 }
 
 #pragma mark - testUnSubscribeFromCategoryInPushServer
-- (void)testUnSubscribeFromCategoryInPushServer
+- (void)test5_UnSubscribeFromCategoryInPushServer
 {
     __block BOOL resultRetrieved = NO;
     
@@ -146,7 +146,7 @@ NSDictionary* registerResultDictionary;
 }
 
 #pragma mark - testgetGetNotificationHistoryFromPushServer
-- (void)testgetGetNotificationHistoryFromPushServer
+- (void)test6_getGetNotificationHistoryFromPushServer
 {
     __block BOOL resultRetrieved = NO;
 
@@ -164,7 +164,7 @@ NSDictionary* registerResultDictionary;
 }
 
 #pragma mark - testUnRegisterDeviceToPushServer
-- (void)testUnRegisterDeviceToPushServer
+- (void)test7_UnRegisterDeviceToPushServer
 {
     __block BOOL resultRetrieved = NO;
     
@@ -179,4 +179,5 @@ NSDictionary* registerResultDictionary;
     NSRunLoop *theRL = [NSRunLoop currentRunLoop];
     while (!resultRetrieved && [theRL runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:10]]);
 }
+
 @end
