@@ -65,6 +65,10 @@ Bunu yaptığınızda uygulama ilk açıldığında sizden Notification Center�
 ```objective-c
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken
 {
+    NSString *token = [[newDeviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSLog(@"My Device token: %@",token);
+
     [[TCellNotificationManager sharedInstance] 
 					setNotificationDeviceTokenWithData:newDeviceToken];
 }
