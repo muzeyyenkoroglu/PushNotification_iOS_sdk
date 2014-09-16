@@ -17,10 +17,11 @@
  *******************************************************************************/
 
 #import "Utilities.h"
+#import <sys/utsname.h>
+
 
 @implementation Utilities
 
-#import <sys/utsname.h>
 
 + (NSString*)deviceModelName {
     
@@ -81,5 +82,6 @@
     
     return deviceName;
 }
+
 
 @end

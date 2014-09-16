@@ -567,7 +567,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = "armv7 armv7s i386 arm64";
+				VALID_ARCHS = "armv7 armv7s i386 arm64 x86_64";
 			};
 			name = Debug;
 		};
@@ -583,7 +583,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = "armv7 armv7s i386 arm64";
+				VALID_ARCHS = "armv7 armv7s i386 arm64 x86_64";
 			};
 			name = Release;
 		};
@@ -593,7 +593,7 @@
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = "armv7 armv7s i386 arm64";
+				VALID_ARCHS = "armv7 armv7s i386 arm64 x86_64";
 			};
 			name = Debug;
 		};
@@ -603,7 +603,7 @@
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = "armv7 armv7s i386 arm64";
+				VALID_ARCHS = "armv7 armv7s i386 arm64 x86_64";
 			};
 			name = Release;
 		};
@@ -655,7 +655,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = "armv7 armv7s i386 arm64";
+				VALID_ARCHS = "armv7 armv7s i386 arm64 x86_64";
 			};
 			name = Prod;
 		};
@@ -666,7 +666,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "PROD=1";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = "armv7 armv7s i386 arm64";
+				VALID_ARCHS = "armv7 armv7s i386 arm64 x86_64";
 			};
 			name = Prod;
 		};
@@ -715,7 +715,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = "armv7 armv7s i386 arm64";
+				VALID_ARCHS = "armv7 armv7s i386 arm64 x86_64";
 			};
 			name = Test;
 		};
@@ -726,7 +726,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = "armv7 armv7s i386 arm64";
+				VALID_ARCHS = "armv7 armv7s i386 arm64 x86_64";
 			};
 			name = Test;
 		};
@@ -856,6 +856,7 @@
 				98E395031963FD5300A0EB5C /* Prod */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -16,22 +16,9 @@
 		980BE5AD1812B244008B53EE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 980BE5AB1812B244008B53EE /* Main.storyboard */; };
 		980BE5B01812B244008B53EE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 980BE5AF1812B244008B53EE /* ViewController.m */; };
 		980BE5B21812B244008B53EE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 980BE5B11812B244008B53EE /* Images.xcassets */; };
-		980BE5B91812B244008B53EE /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 980BE5B81812B244008B53EE /* XCTest.framework */; };
-		980BE5BA1812B244008B53EE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 980BE5991812B244008B53EE /* Foundation.framework */; };
-		980BE5BB1812B244008B53EE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 980BE59D1812B244008B53EE /* UIKit.framework */; };
 		985E2B51181E9F010019B7FA /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 985E2B50181E9F010019B7FA /* TableViewController.m */; };
 		98AA14AA18ED863F00D12283 /* TCellPushNotification.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98AA14A918ED863F00D12283 /* TCellPushNotification.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		980BE5BC1812B244008B53EE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 980BE58E1812B244008B53EE /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 980BE5951812B244008B53EE;
-			remoteInfo = PushNotificationSample;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		980BE5961812B244008B53EE /* PushNotificationSDK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PushNotificationSDK.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -48,7 +35,6 @@
 		980BE5AE1812B244008B53EE /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		980BE5AF1812B244008B53EE /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		980BE5B11812B244008B53EE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		980BE5B71812B244008B53EE /* PushNotificationSampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PushNotificationSampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		980BE5B81812B244008B53EE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		985E2B4F181E9F010019B7FA /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
 		985E2B50181E9F010019B7FA /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
@@ -64,16 +50,6 @@
 				980BE59E1812B244008B53EE /* UIKit.framework in Frameworks */,
 				98AA14AA18ED863F00D12283 /* TCellPushNotification.framework in Frameworks */,
 				980BE59A1812B244008B53EE /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		980BE5B41812B244008B53EE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				980BE5B91812B244008B53EE /* XCTest.framework in Frameworks */,
-				980BE5BB1812B244008B53EE /* UIKit.framework in Frameworks */,
-				980BE5BA1812B244008B53EE /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,7 +69,6 @@
 			isa = PBXGroup;
 			children = (
 				980BE5961812B244008B53EE /* PushNotificationSDK.app */,
-				980BE5B71812B244008B53EE /* PushNotificationSampleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -157,24 +132,6 @@
 			productReference = 980BE5961812B244008B53EE /* PushNotificationSDK.app */;
 			productType = "com.apple.product-type.application";
 		};
-		980BE5B61812B244008B53EE /* PushNotificationSampleTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 980BE5CB1812B244008B53EE /* Build configuration list for PBXNativeTarget "PushNotificationSampleTests" */;
-			buildPhases = (
-				980BE5B31812B244008B53EE /* Sources */,
-				980BE5B41812B244008B53EE /* Frameworks */,
-				980BE5B51812B244008B53EE /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				980BE5BD1812B244008B53EE /* PBXTargetDependency */,
-			);
-			name = PushNotificationSampleTests;
-			productName = PushNotificationSampleTests;
-			productReference = 980BE5B71812B244008B53EE /* PushNotificationSampleTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -183,11 +140,6 @@
 			attributes = {
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Abdulbasıt Tanhan";
-				TargetAttributes = {
-					980BE5B61812B244008B53EE = {
-						TestTargetID = 980BE5951812B244008B53EE;
-					};
-				};
 			};
 			buildConfigurationList = 980BE5911812B244008B53EE /* Build configuration list for PBXProject "PushNotificationSample" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -203,7 +155,6 @@
 			projectRoot = "";
 			targets = (
 				980BE5951812B244008B53EE /* PushNotificationSDK */,
-				980BE5B61812B244008B53EE /* PushNotificationSampleTests */,
 			);
 		};
 /* End PBXProject section */
@@ -216,13 +167,6 @@
 				980BE5B21812B244008B53EE /* Images.xcassets in Resources */,
 				980BE5A41812B244008B53EE /* InfoPlist.strings in Resources */,
 				980BE5AD1812B244008B53EE /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		980BE5B51812B244008B53EE /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,22 +184,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		980BE5B31812B244008B53EE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		980BE5BD1812B244008B53EE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 980BE5951812B244008B53EE /* PushNotificationSDK */;
-			targetProxy = 980BE5BC1812B244008B53EE /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		980BE5A21812B244008B53EE /* InfoPlist.strings */ = {
@@ -393,46 +322,6 @@
 			};
 			name = Release;
 		};
-		980BE5CC1812B244008B53EE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PushNotificationSample.app/PushNotificationSample";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PushNotificationSample/PushNotificationSample-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "PushNotificationSampleTests/PushNotificationSampleTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		980BE5CD1812B244008B53EE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PushNotificationSample.app/PushNotificationSample";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PushNotificationSample/PushNotificationSample-Prefix.pch";
-				INFOPLIST_FILE = "PushNotificationSampleTests/PushNotificationSampleTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -450,15 +339,6 @@
 			buildConfigurations = (
 				980BE5C91812B244008B53EE /* Debug */,
 				980BE5CA1812B244008B53EE /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		980BE5CB1812B244008B53EE /* Build configuration list for PBXNativeTarget "PushNotificationSampleTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				980BE5CC1812B244008B53EE /* Debug */,
-				980BE5CD1812B244008B53EE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
