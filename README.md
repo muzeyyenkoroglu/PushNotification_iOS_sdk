@@ -14,7 +14,7 @@ TCellPushNotification.framework’ u projeye eklemek için Xcode’ ta açık ol
 Ayrıca projenize MobileCoreServices.framework ve SystemConfiguration.framework kütüphanelerini eklemelisiniz.
 
 ##Turkcell Push Server Üzerinde Uygulamanın Oluşturulması
-Uygulamanıza Turkcell Push SDK entegrasyonu yapabilmeniz için öncelikle Push Server (http://pushserver.turkcell.com.tr)
+Uygulamanıza Turkcell Push SDK entegrasyonu yapabilmeniz için öncelikle Push Server (http://push.turkcell.com.tr)
  üzerinde uygulama kaydı oluşturmalısınız. Uygulamayı oluşturduktan sonra iOS Ayarları bölümünden ApplicationId ve SecretKey bilgisini alabilirsiniz. *ApplicationId ve SecretKey SDK için bulunması zorunlu iki değerdir.*
 
 ##SDK Metodları
@@ -30,14 +30,21 @@ Turkcell Push SDK’nın en önemli sınıfı **TCellNotificationManager** sın�
 #import <TCellPushNotification/TCellNotificationManager.h>
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-        TCellNotificationSettings* settings = [[TCellNotificationSettings alloc]
+	TCellNotificationSettings* settings = [[TCellNotificationSettings alloc]
  							initWithAppId:@"AppId" 
-							secretKey:@"SecretKey"
-							notificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound)];
+							secretKey:@"SecretKey"];
     
 	TCellNotificationManager* man =[TCellNotificationManager sharedInstance];
     	man.notificationSettings = settings;
-    	[man registerApplicationForRemoteNotificationTypes];
+    	
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        
+        UIUserNotificationSettings *userNotificationSettings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIUserNotificationTypeSound categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:userNotificationSettings];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    } else {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound)];
+    }
     
 	return YES;
 }
@@ -51,13 +58,18 @@ Alan Adı | Açıklaması | Zorunlu mu ?
 ------------ | ------------- | ------------
 appId Cell | PushServer üzerinde uygulamanız oluşturulduğunda size iletilen ApplicationId değeri.   | Evet
 secretKey Cell | PushServer üzerinde uygulamanız oluşturulduğunda size iletilen SecretKey değeri.  | Evet
-notificationTypes|UIRemoteNotificationTypeNone, UIRemoteNotificationTypeBadge, UIRemoteNotificationTypeSound, UIRemoteNotificationTypeAlert, UIRemoteNotificationTypeNewsstandContentAvailability değerlerinden birini veya birkaçını alabilir. | Evet
-
 
 Diğer atanması gereken zorunlu değişken **TCellNotificationManager** nesnesinde **deviceToken** değişkeni. Bunu cihazın size sağlayacağı token ile yapmanız gerekiyor. Bu tokenı alabilmeniz uygulamanızı Notification Center’ a kaydetmeniz gerekiyor. Yukarıdaki kod örneğinde bu aşağıdaki satırda yapılmış oluyor.
 
 ```objective-c
-[[TCellNotificationManager sharedInstance] registerApplicationForRemoteNotificationTypes];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        
+        UIUserNotificationSettings *userNotificationSettings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIUserNotificationTypeSound categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:userNotificationSettings];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    } else {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound)];
+    }
 ```
 
 Bunu yaptığınızda uygulama ilk açıldığında sizden Notification Center’a kayıt izni isteyecektir. Daha sonra tokenı alabilmek için **AppDelegate** sınıfına aşağıdaki delegate metotlarını eklemeniz gerekiyor.
@@ -117,7 +129,7 @@ Kayıt olmanın yanı sıra bir uygulama push bildirimleri almayı kesmek te ger
 
 **result** değişkeninden **isSuccessfull** değerini kontrol ederek, başarılı ise uygulamayı Notification Center’ dan kaldırabilirsiniz. Bunun için aşağıdaki satırı eklemek yeterli olacaktır.
 ```objective-c
-[[TCellNotificationManager sharedInstance] unRegisterApplicationForRemoteNotificationTypes];
+[[UIApplication sharedApplication] unregisterForRemoteNotifications];
 ```
 
 #Bildirim Kategori Listesinin Alınması
