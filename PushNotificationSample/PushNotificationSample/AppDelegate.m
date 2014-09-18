@@ -22,17 +22,26 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
     NSLog(@"test: %@", SDK_VERSION);
     
     TCellNotificationSettings* settings = [[TCellNotificationSettings alloc]
                                            initWithAppId:@"APP_ID"
-                                           secretKey:@"SECURITY_KEY"
-                                           notificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound)];
+                                           secretKey:@"SECURITY_KEY"];
     
 	TCellNotificationManager* man =[TCellNotificationManager sharedInstance];
     man.notificationSettings = settings;
-    [man registerApplicationForRemoteNotificationTypes];
+    
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound)];
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        
+        UIUserNotificationSettings *userNotificationSettings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:userNotificationSettings];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    } else {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
+    }
+    
 #if DEBUG
     [[TCellNotificationManager sharedInstance] setNotificationDeviceTokenWithString:@"your_test_token"];//This is usually for testing on simulator. You may use a unique id.
 #endif

@@ -47,10 +47,7 @@ NSDictionary* registerResultDictionary;
     secretKey = SECRETKEY;
     deviceToken = TOKEN;
     manager = [TCellNotificationManager sharedInstance];
-    notificationSettings = [[TCellNotificationSettings alloc] initWithAppId:appId
-                                                                  secretKey:secretKey
-                                                          notificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound)];
-    manager.notificationSettings = notificationSettings;
+    notificationSettings = [[TCellNotificationSettings alloc] initWithAppId:appId secretKey:secretKey];
     [manager setNotificationDeviceTokenWithString:deviceToken];
 }
 

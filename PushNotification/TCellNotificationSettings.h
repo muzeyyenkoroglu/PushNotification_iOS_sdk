@@ -37,16 +37,9 @@
 @property(strong, nonatomic) NSString* secretKey;
 
 /*!
- * The notification types which the appication wants to be notified by. 
- * Can be UIRemoteNotificationTypeNone, UIRemoteNotificationTypeBadge,UIRemoteNotificationTypeSound, UIRemoteNotificationTypeAlert, UIRemoteNotificationTypeNewsstandContentAvailability.
- */
-@property(assign, nonatomic) UIRemoteNotificationType notificationTypes;
-
-/*!
  * Creates an TCellNotificationSettings object initialized with the notification settings.
  * \param appId Application ID which is provided by push notification center.
  * \param secretKey Secret key which is provided by push notification center.
- * \param notificationTypes The notification types which the appication wants to be notified by. Can be UIRemoteNotificationTypeNone, UIRemoteNotificationTypeBadge,UIRemoteNotificationTypeSound, UIRemoteNotificationTypeAlert, UIRemoteNotificationTypeNewsstandContentAvailability.
  */
-- (TCellNotificationSettings*)initWithAppId:(NSString*)appId secretKey:(NSString*)secretKey notificationTypes:(UIRemoteNotificationType)notificationTypes;
+- (TCellNotificationSettings*)initWithAppId:(NSString*)appId secretKey:(NSString*)secretKey;
 @end

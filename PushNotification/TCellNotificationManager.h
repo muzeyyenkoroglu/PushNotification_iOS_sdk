@@ -62,18 +62,6 @@
 - (BOOL)hasDeviceToken;
 
 /*!
- * Registers device for remote notification types which is set in notificationSettings variable.
- * Does the same thing as in UIApplication class registerForRemoteNotificationTypes: method.
- */
-- (void)registerApplicationForRemoteNotificationTypes;
-
-/*!
- * Unregisters device for all remote notification types.
- * Does the same thing as in UIApplication class registerForRemoteNotificationTypes:UIRemoteNotificationTypeNone method.
- */
-- (void)unRegisterApplicationForRemoteNotificationTypes;
-
-/*!
  * Registers device to push notification center.
  *
  * \param customID holds any string to send to push server for an alternative identification of the client

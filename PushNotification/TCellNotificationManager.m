@@ -62,16 +62,6 @@
     return sharedInstance;
 }
 
-- (void)registerApplicationForRemoteNotificationTypes
-{
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(self.notificationSettings.notificationTypes)];
-}
-
-- (void)unRegisterApplicationForRemoteNotificationTypes
-{
-    [[UIApplication sharedApplication] unregisterForRemoteNotifications];
-}
-
 - (void)setNotificationDeviceTokenWithData:(NSData *)deviceToken
 {
     NSString *devToken = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];

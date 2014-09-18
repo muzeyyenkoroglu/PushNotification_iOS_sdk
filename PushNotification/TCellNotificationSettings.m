@@ -25,15 +25,13 @@
 @implementation TCellNotificationSettings
 @synthesize appId = _appId;
 @synthesize secretKey = _secretKey;
-@synthesize notificationTypes = _notificationTypes;
 
-- (TCellNotificationSettings*)initWithAppId:(NSString*)appId secretKey:(NSString*)secretKey notificationTypes:(UIRemoteNotificationType)notificationTypes
+- (TCellNotificationSettings*)initWithAppId:(NSString*)appId secretKey:(NSString*)secretKey
 {
     self = [super init];
     if (self) {
         self.appId = appId;
         self.secretKey = secretKey;
-        self.notificationTypes = notificationTypes;
      }
     return self;
 }
