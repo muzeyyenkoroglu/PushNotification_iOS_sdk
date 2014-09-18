@@ -32,12 +32,19 @@ Turkcell Push SDK’nın en önemli sınıfı **TCellNotificationManager** sın�
 {
         TCellNotificationSettings* settings = [[TCellNotificationSettings alloc]
  							initWithAppId:@"AppId" 
-							secretKey:@"SecretKey"
-							notificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound)];
+							secretKey:@"SecretKey"];
     
 	TCellNotificationManager* man =[TCellNotificationManager sharedInstance];
     	man.notificationSettings = settings;
-    	[man registerApplicationForRemoteNotificationTypes];
+    	
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        
+        UIUserNotificationSettings *userNotificationSettings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIUserNotificationTypeSound categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:userNotificationSettings];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    } else {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound)];
+    }
     
 	return YES;
 }
