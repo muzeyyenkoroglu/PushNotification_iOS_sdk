@@ -30,9 +30,7 @@
     
 	TCellNotificationManager* man =[TCellNotificationManager sharedInstance];
     man.notificationSettings = settings;
-    
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound)];
-    
+        
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
         
         UIUserNotificationSettings *userNotificationSettings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil];
