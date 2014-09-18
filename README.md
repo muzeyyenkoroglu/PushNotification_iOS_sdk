@@ -58,8 +58,6 @@ Alan Adı | Açıklaması | Zorunlu mu ?
 ------------ | ------------- | ------------
 appId Cell | PushServer üzerinde uygulamanız oluşturulduğunda size iletilen ApplicationId değeri.   | Evet
 secretKey Cell | PushServer üzerinde uygulamanız oluşturulduğunda size iletilen SecretKey değeri.  | Evet
-notificationTypes|UIRemoteNotificationTypeNone, UIRemoteNotificationTypeBadge, UIRemoteNotificationTypeSound, UIRemoteNotificationTypeAlert, UIRemoteNotificationTypeNewsstandContentAvailability değerlerinden birini veya birkaçını alabilir. | Evet
-
 
 Diğer atanması gereken zorunlu değişken **TCellNotificationManager** nesnesinde **deviceToken** değişkeni. Bunu cihazın size sağlayacağı token ile yapmanız gerekiyor. Bu tokenı alabilmeniz uygulamanızı Notification Center’ a kaydetmeniz gerekiyor. Yukarıdaki kod örneğinde bu aşağıdaki satırda yapılmış oluyor.
 
