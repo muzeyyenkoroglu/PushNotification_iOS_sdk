@@ -82,7 +82,7 @@
                 TCellRegistrationResult *result = (TCellRegistrationResult*)obj;
                 self.spinner.hidden = YES;
                 if (result.isSuccessfull){
-                    [[UIApplication sharedApplication] unregisterForRemoteNotifications];//removes application from notification center
+                    //[[UIApplication sharedApplication] unregisterForRemoteNotifications];//removes application from notification center
                     UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:@"Device is unregistered from push server." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
                     [alert show];
                 }else{
