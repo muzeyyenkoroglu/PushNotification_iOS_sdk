@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="GjX-rB-e44">
+    <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller - Push SDK APIs-->
+        <scene sceneID="ufC-wZ-h7g">
+            <objects>
+                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="oAj-mn-KQ6">
+                                <rect key="frame" x="35" y="81" width="250" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
+                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="30" maxX="0.0" maxY="-30"/>
+                                <state key="normal" title="Register Device">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="registerDeviceButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="fas-aJ-9hh"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="L6H-wi-wk9">
+                                <rect key="frame" x="35" y="119" width="250" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
+                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="30" maxX="0.0" maxY="-30"/>
+                                <state key="normal" title="Unregister Device">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="unRegisterDeviceButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="niG-V2-X0L"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="r0z-6t-b1D">
+                                <rect key="frame" x="35" y="157" width="250" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
+                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="30" maxX="0.0" maxY="-30"/>
+                                <state key="normal" title="Get Category List">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="getCategoryListButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="y6u-y9-aqf"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="l69-x6-yy2">
+                                <rect key="frame" x="35" y="195" width="250" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
+                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="30" maxX="0.0" maxY="-30"/>
+                                <state key="normal" title="Get Subscribed Category List">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="getSubscribedCategoryPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Zhs-i5-bRt"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Vhe-Wc-na5">
+                                <rect key="frame" x="35" y="233" width="250" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
+                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="30" maxX="0.0" maxY="-30"/>
+                                <state key="normal" title="Get Notificatin History">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="getNotificationHistory:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="XdP-z2-CnL"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" id="Xjp-iC-7CU">
+                                <rect key="frame" x="142" y="265" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Push SDK APIs" id="LDz-hu-GFj"/>
+                    <connections>
+                        <outlet property="spinner" destination="Xjp-iC-7CU" id="IuB-Ey-ave"/>
+                        <segue destination="Sol-Al-ufE" kind="push" identifier="TableVC" id="cck-vy-TbN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1007" y="127"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="owD-zF-D4Y">
+            <objects>
+                <tableViewController id="Sol-Al-ufE" customClass="TableViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="1zS-0h-zb1">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="tTn-LN-hhW">
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tTn-LN-hhW" id="nYW-C0-2dV">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="Sol-Al-ufE" id="Lj8-uu-Yky"/>
+                            <outlet property="delegate" destination="Sol-Al-ufE" id="FIN-s7-1nA"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="xX3-37-67j"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="69s-Lx-6Uq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1489" y="127"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="wfl-rl-Ty8">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GjX-rB-e44" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="tky-cP-ma5">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="Aii-Vt-zJC"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="R8M-6d-MD1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="497" y="127"/>
+        </scene>
+    </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
