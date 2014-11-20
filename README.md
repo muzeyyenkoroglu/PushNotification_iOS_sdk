@@ -5,14 +5,6 @@
 
 Turkcell Push SDK sayesinde iOS uygulamalarınıza kolayca push bildirimleri yeteneği ekleyebilirsiniz. Bu dokümanda bir iOS uygulamasına Turkcell Push SDK entegrasyonunun nasıl yapılacağı anlatılmıştır.
 
-## SDK’nın Projeye Referans Olarak Eklenmesi
-TCellPushNotification.framework’ u projeye eklemek için Xcode’ ta açık olan projenizi seçtiğinizde sağda beliren Targets bölümünden aşağıdaki yolu izleyerek ekleyebilirsiniz.
-
- 
-> Targets -> Your Target -> Link Binary With Libraries -> Artı işareti -> Add Other
-
-Ayrıca projenize MobileCoreServices.framework ve SystemConfiguration.framework kütüphanelerini eklemelisiniz.
-
 ##Turkcell Push Server Üzerinde Uygulamanın Oluşturulması
 Uygulamanıza Turkcell Push SDK entegrasyonu yapabilmeniz için öncelikle Push Server (http://push.turkcell.com.tr)
  üzerinde uygulama kaydı oluşturmalısınız. Uygulamayı oluşturduktan sonra iOS Ayarları bölümünden ApplicationId ve SecretKey bilgisini alabilirsiniz. *ApplicationId ve SecretKey SDK için bulunması zorunlu iki değerdir.*
