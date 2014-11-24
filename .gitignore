@@ -15,3 +15,5 @@ DerivedData
 *.xccheckout
 build/
 profile
+.svn
+.project
