@@ -50,7 +50,6 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedInstance = [[TCellNotificationManager alloc] init];
-        NSLog(@"Push Notification SDK v%@ build date %@", PROJECT_VERSION, [NSDate date]);
     });
     return sharedInstance;
 }
@@ -112,7 +111,7 @@
 
 - (void)registerDeviceWithCustomID:(NSString *)customID genericParam:(NSString *)genericParam completionHandler:(void(^)(id obj))completionBlock
 {    
-    NSString* path = [NSString stringWithFormat:@"%@%@/%@",REGISTRATION_PATH,self.notificationSettings.appId,self.deviceToken];
+    NSString* path = [NSString stringWithFormat:@"%@%@.%@.%@",REGISTRATION_PATH,self.notificationSettings.appId,self.deviceToken,[self encryptedStringAppIDTokenSecurityKey]];
     
     
     NSString* deviceModelName = [[Utilities deviceModelName] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
@@ -123,9 +122,6 @@
     
     if (customID && [customID length] >0)
         path = [path stringByAppendingString:[NSString stringWithFormat:@"&%@=%@",PARAMETER_CUSTOM_ID,customID]];
-    
-    if (genericParam && [genericParam length] >0)
-        path = [path stringByAppendingString:[NSString stringWithFormat:@"&%@=%@",PARAMETER_GENERIC_PARAM,genericParam]];
     
     [self makeRequestWithBaseURL:PUSH_SERVER_URL path:path selector:@selector(registrationResultInternal:) completion:completionBlock];
 }
@@ -139,7 +135,7 @@
 
 - (void)unRegisterDeviceWithCompletionHandler:(void(^)(id obj))completionBlock
 {
-    NSString* path = [NSString stringWithFormat:@"%@%@/%@",UNREGISTRATION_PATH,self.notificationSettings.appId,self.deviceToken];
+    NSString* path = [NSString stringWithFormat:@"%@%@.%@.%@",UNREGISTRATION_PATH,self.notificationSettings.appId,self.deviceToken,[self encryptedStringAppIDTokenSecurityKey]];
     [self makeRequestWithBaseURL:PUSH_SERVER_URL path:path selector:@selector(unRegistrationResultInternal:) completion:completionBlock];
 }
 

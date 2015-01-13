@@ -23,26 +23,15 @@ NSString* const PROJECT_VERSION = @"1.0";
 NSString* const DEFAULT_APPID = @"DEFAULT_APPID";
 NSString* const DEFAULT_SECRETKEY = @"DEFAULT_SECRETKEY";
 
-NSString* const PUSH_SERVER_URL = @"http://push.turkcell.com.tr";
-//NSString* const PUSH_SERVER_URL = @"http://pushservertest.turkcell.com.tr";
+NSString* const PUSH_SERVER_URL = @"http://pushserver.turkcell.com.tr";
 
-/*
-NSString* const REGISTRATION_PATH 	= @"/PushServerLT/rest/api/registerdevice/";
-NSString* const UNREGISTRATION_PATH = @"/PushServerLT/rest/api/unregisterdevice/";
-NSString* const ALLOWED_CATEGORIES_PATH = @"/PushServerLT/rest/api/getAllowedCategories/";
-NSString* const CATEGORY_LIST_PATH 	= @"/PushServerLT/rest/api/getCategoryList/";
-NSString* const SET_CATEGORY_PATH 	= @"/PushServerLT/rest/api/setAllowedCategory/";
-NSString* const UNSET_CATEGORY_PATH = @"/PushServerLT/rest/api/unsetAllowedCategory/";
-NSString* const MESSAGE_HISTORY_PATH = @"/PushServerLT/rest/api/getMessageHistory/";
-*/
-
-NSString* const REGISTRATION_PATH 	= @"/rest/api/registerdevice/";
-NSString* const UNREGISTRATION_PATH = @"/rest/api/unregisterdevice/";
-NSString* const ALLOWED_CATEGORIES_PATH = @"/rest/api/getAllowedCategories/";
-NSString* const CATEGORY_LIST_PATH 	= @"/rest/api/getCategoryList/";
-NSString* const SET_CATEGORY_PATH 	= @"/rest/api/setAllowedCategory/";
-NSString* const UNSET_CATEGORY_PATH = @"/rest/api/unsetAllowedCategory/";
-NSString* const MESSAGE_HISTORY_PATH = @"/rest/api/getMessageHistory/";
+NSString* const REGISTRATION_PATH 	= @"/PushServer/rest/registerdevice/";
+NSString* const UNREGISTRATION_PATH = @"/PushServer/rest/unregisterdevice/";
+NSString* const ALLOWED_CATEGORIES_PATH = @"/PushServer/rest/getAllowedCategories/";
+NSString* const CATEGORY_LIST_PATH 	= @"/PushServer/rest/getCategoryList/";
+NSString* const SET_CATEGORY_PATH 	= @"/PushServer/rest/setAllowedCategory/";
+NSString* const UNSET_CATEGORY_PATH = @"/PushServer/rest/unsetAllowedCategory/";
+NSString* const MESSAGE_HISTORY_PATH = @"/PushServer/rest/getMessageHistory/";
 
 NSString* const PARAMETER_CUSTOM_ID 	= @"customId";
 NSString* const PARAMETER_DEVICE_MODEL 	= @"deviceModel";

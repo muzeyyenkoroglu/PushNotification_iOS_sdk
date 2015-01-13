@@ -25,8 +25,8 @@
     NSLog(@"test: %@", SDK_VERSION);
     
     TCellNotificationSettings* settings = [[TCellNotificationSettings alloc]
-                                           initWithAppId:@"APP_ID"
-                                           secretKey:@"SECURITY_KEY"];
+                                           initWithAppId:@"9eb7ea7da65ab87e8648792dfc1e2f21"
+                                           secretKey:@"ad8ca6752d4023dc49001d6a00545fdf"];
     
 	TCellNotificationManager* man =[TCellNotificationManager sharedInstance];
     man.notificationSettings = settings;
@@ -41,7 +41,7 @@
     }
     
 #if DEBUG
-    [[TCellNotificationManager sharedInstance] setNotificationDeviceTokenWithString:@"your_test_token"];//This is usually for testing on simulator. You may use a unique id.
+    [[TCellNotificationManager sharedInstance] setNotificationDeviceTokenWithString:@"6a46c93468fc7510f85173f307aaa81e720789c2db6593c6e9448b5191cec263"];//This is usually for testing on simulator. You may use a unique id.
 #endif
     return YES;
 }
